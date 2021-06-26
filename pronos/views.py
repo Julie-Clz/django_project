@@ -12,5 +12,5 @@ class MatchListView(ListView):
     model = Match
     template_name = 'pronos/match_index.html' # <app>/<model>_<viewtype>.html
     context_object_name = 'matchs'
-    # paginate_by = 5
+    paginate_by = 4
 
