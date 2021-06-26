@@ -1,4 +1,4 @@
-from pronos.models import Hometeam, Match
+from pronos.models import Match, Bet
 from django.shortcuts import render
 from django.views.generic import ListView
 from django.http import HttpResponse
@@ -14,3 +14,8 @@ class MatchListView(ListView):
     context_object_name = 'matchs'
     paginate_by = 4
 
+class BetListView(ListView):
+    model = Bet
+    template_name = 'pronos/bet_index.html' # <app>/<model>_<viewtype>.html
+    context_object_name = 'bets'
+    paginate_by = 1

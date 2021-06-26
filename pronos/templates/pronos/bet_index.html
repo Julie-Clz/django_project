@@ -1,11 +1,11 @@
 {% extends "blog/base.html" %}
 {% block content %}
-<h1>Prochains Matchs</h1>
-  {% for match in matchs %}
+<h1>Mes pronos</h1>
+  {% for bet in bets %}
   <article class="media content-section">
-    <p>{{ match.match_date|date:"D d F, Y" }} @ {{ match.match_date|date:"H:m" }}</p><br>
-    <p>{{ match.hometeam.name }} <img src="{{ match.hometeam.image.url }}"> vs <img src="{{ match.awayteam.hometeam.image.url }}"> {{ match.awayteam.hometeam.name }}</p>
-    <p>{{ match.goal_hometeam }} - {{ match.goal_awayteam }}</p>
+    <p>{{ bet.match.match_date|date:"D d F, Y" }} @ {{ bet.match.match_date|date:"H:m" }}</p><br>
+    <p>{{ bet.match.hometeam.name }} <img src="{{ bet.match.hometeam.image.url }}"> vs <img src="{{ bet.match.awayteam.hometeam.image.url }}"> {{ bet.match.awayteam.hometeam.name }}</p>
+    <p>{{ bet.prono_hometeam }} - {{ bet.prono_awayteam }}</p>
   </article>
     {% endfor %}
 
