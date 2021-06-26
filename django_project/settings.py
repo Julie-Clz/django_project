@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['django-pronos.herokuapp.com']
 
 INSTALLED_APPS = [
     'blog.apps.BlogConfig',
+    'pronos.apps.PronosConfig',
     'users.apps.UsersConfig',
     'crispy_forms',
     'django.contrib.admin',
