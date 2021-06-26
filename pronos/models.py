@@ -11,8 +11,8 @@ class Hometeam(models.Model):
 
 class Match(models.Model):
     match_date = models.DateTimeField()
-    goal_hometeam = models.IntegerField()
-    goal_awayteam = models.IntegerField()
+    goal_hometeam = models.PositiveIntegerField(blank=True, null=True)
+    goal_awayteam = models.PositiveIntegerField(blank=True, null=True)
     hometeam = models.ForeignKey(Hometeam, on_delete=models.CASCADE)
 
     # def __str__(self):

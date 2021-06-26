@@ -18,4 +18,4 @@ class BetListView(ListView):
     model = Bet
     template_name = 'pronos/bet_index.html' # <app>/<model>_<viewtype>.html
     context_object_name = 'bets'
-    paginate_by = 1
+    paginate_by = 4
