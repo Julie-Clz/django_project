@@ -15,15 +15,15 @@ class Match(models.Model):
     goal_awayteam = models.IntegerField()
     hometeam = models.ForeignKey(Hometeam, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.id, self.hometeam.name
+    # def __str__(self):
+    #     return self.id, self.hometeam.name
 
 class Awayteam(models.Model):
     hometeam = models.ForeignKey(Hometeam, on_delete=models.CASCADE)
     match = models.OneToOneField(Match, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.hometeam.name
+    # def __str__(self):
+    #     return self.hometeam.name
 
 class Bet(models.Model):
     prono_hometeam = models.IntegerField()
@@ -33,5 +33,5 @@ class Bet(models.Model):
     hometeam = models.OneToOneField(Hometeam, on_delete=models.CASCADE)
     awayteam = models.OneToOneField(Awayteam, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.user.name, self.id
+    # def __str__(self):
+    #     return self.user.name, self.id
