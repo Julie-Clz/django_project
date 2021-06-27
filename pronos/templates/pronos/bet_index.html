@@ -1,13 +1,14 @@
 {% extends "blog/base.html" %}
 {% block content %}
 <h1>Mes pronos</h1>
-  {% for bet in bets %}
-  <article class="media content-section">
+{% for bet in bets %}
+<article class="media content-section">
     <p>{{ bet.match.match_date|date:"D d F, Y" }} @ {{ bet.match.match_date|date:"H:m" }}</p><br>
-    <p>{{ bet.match.hometeam.name }} <img src="{{ bet.match.hometeam.image.url }}"> vs <img src="{{ bet.match.awayteam.hometeam.image.url }}"> {{ bet.match.awayteam.hometeam.name }}</p>
+    <p>{{ bet.match.hometeam.name }} <img src="{{ bet.match.hometeam.image.url }}"> vs <img src="{{ bet.awayteam.hometeam.image.url }}"> {{ bet.awayteam.hometeam.name }}</p>
     <p>{{ bet.prono_hometeam }} - {{ bet.prono_awayteam }}</p>
   </article>
-    {% endfor %}
+
+  {% endfor %}
 
     {% if is_paginated %}
     {% if page_obj.has_previous %}

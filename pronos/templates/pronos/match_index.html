@@ -1,11 +1,13 @@
 {% extends "blog/base.html" %}
 {% block content %}
 <h1>Prochains Matchs</h1>
-  {% for match in matchs %}
+  {% for awayteam in awayteams %}
   <article class="media content-section">
-    <p>{{ match.match_date|date:"D d F, Y" }} @ {{ match.match_date|date:"H:m" }}</p><br>
-    <p>{{ match.hometeam.name }} <img src="{{ match.hometeam.image.url }}"> vs <img src="{{ match.awayteam.hometeam.image.url }}"> {{ match.awayteam.hometeam.name }}</p>
-    <p>{{ match.goal_hometeam }} - {{ match.goal_awayteam }}</p>
+    <p>{{ awayteam.match.id }}</p>
+    <p>{{ awayteam.match.match_date|date:"D d F, Y" }} @ {{ awayteam.match.match_date|date:"H:m" }}</p><br>
+    <p>{{ awayteam.match.hometeam.name }} <img src="{{ awayteam.match.hometeam.image.url }}"> vs <img src="{{ awayteam.hometeam.image.url }}"> {{ awayteam.hometeam.name }}</p>
+    <p>{{ awayteam.match.hometeam.id }} - {{ awayteam.id }}</p>
+    <p>{{ awayteam.match.goal_hometeam }} - {{ awayteam.match.goal_awayteam }}</p>
   </article>
     {% endfor %}
 

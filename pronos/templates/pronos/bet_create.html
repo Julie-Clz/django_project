@@ -1,0 +1,78 @@
+{% extends "blog/base.html" %}
+<!-- {% load crispy_forms_tags %} -->
+{% block content %}
+
+  <div class="content-section" >
+    {% for awayteam in awayteams %}
+    <article class="media content-section">
+      <p>{{ awayteam.match.match_date|date:"D d F, Y" }} @ {{ awayteam.match.match_date|date:"H:m" }}</p><br>
+      <p>{{ awayteam.match.hometeam.name }} <img src="{{ awayteam.match.hometeam.image.url }}"> vs <img src="{{ awayteam.hometeam.image.url }}"> {{ awayteam.hometeam.name }}</p>
+    </article>
+
+    <form action="{% url 'pronos-bet-create' %}" method="POST" name="BetCreateForm" id="BetCreateForm">
+      {% csrf_token %}
+      <div class="form-group">
+        <select  type="datetime" class="form-control" id="user" name="user">
+          <option>{{ user.id }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <select  type="datetime" class="form-control" id="match" name="match">
+          <option>{{ awayteam.match.id }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <select class="form-control" id="hometeam" name="hometeam">
+          <option>{{ awayteam.match.hometeam.id }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <select class="form-control" id="awayteam" name="awayteam">
+          <option>{{ awayteam.id }}</option>
+        </select>
+      </div>
+
+      <div class="form-group form-number-design d-inline-block">
+        <input type="number" class="form-control" id="prono_hometeam" placeholder="{{ match.bet.prono_hometeam }}" name="prono_hometeam" required data-validation-required-message="Please enter a goal number."> 
+        <p class="invalid-feedback"></p>
+      </div>
+
+      <div class="form-group form-number-design d-inline-block">
+        <input type="number" class="form-control" id="prono_awayteam" placeholder="{{ match.bet.prono_awayteam }}" name="prono_awayteam" required data-validation-required-message="Please enter a goal number.">
+        <p class="invalid-feedback"></p>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-outline-info" id="sendMessageButton">Submit</button>
+      </div>
+    </form>
+    {% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+
+    
+    <!-- <form action="" method="POST">
+      {% csrf_token %}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Pronos</legend>
+        {{ form|crispy }}
+      </fieldset>
+      <div class="form-group">
+        <button class="btn btn-outline-info mt-3" type="submit">Submit</button>
+      </div>
+    </form> -->
+    {% endfor %}
+  </div>
+ 
+{% endblock content %}
