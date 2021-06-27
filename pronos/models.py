@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Hometeam(models.Model):
@@ -34,5 +35,8 @@ class Bet(models.Model):
     hometeam = models.ForeignKey(Hometeam, on_delete=models.CASCADE)
     awayteam = models.ForeignKey(Awayteam, on_delete=models.CASCADE)
 
-    # def __str__(self):
-    #     return self.user.name, self.id
+    def __str__(self):
+        return str(self.id)
+
+    def get_absolute_url(self):
+        return reverse('bet-detail', kwargs={'pk': self.pk})

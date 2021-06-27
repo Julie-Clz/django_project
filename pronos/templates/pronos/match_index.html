@@ -1,6 +1,7 @@
 {% extends "blog/base.html" %}
 {% block content %}
 <h1>Prochains Matchs</h1>
+<!-- Match index -->
   {% for awayteam in awayteams %}
   <article class="media content-section">
     <p>{{ awayteam.match.id }}</p>
@@ -11,6 +12,8 @@
   </article>
     {% endfor %}
 
+
+  <!-- Pagination -->
     {% if is_paginated %}
     {% if page_obj.has_previous %}
         <a class="btn btn-outline-info mb-4" href="?page=1">First</a>

@@ -1,15 +1,14 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from pronos.models import Awayteam, Match, Bet
 from django.contrib.auth.models import User
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import BetCreateForm
-# from django.http import HttpResponse
 
-# def index(request):
-#     return HttpResponse("Hello, world. You're at the polls index.")
+
+
 
 class MatchListView(ListView):
     model = Awayteam
@@ -37,33 +36,36 @@ def BetCreateView(request):
         if form.is_valid():
             form.save()
             messages.success(request, f'Your prono has been created!')
-            return redirect('pronos-bet-index')
+            return redirect('bet-index')
     else:
         form = BetCreateForm()
 
     return render(request, 'pronos/bet_create.html', {'form': form, 'awayteams': awayteams })
 
+class BetDetailView(DetailView):
+    model = Bet
 
 class BetUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Bet
-    fields = ['prono_hometeam', 'prono_awayteam']
+    fields = ['match', 'hometeam', 'awayteam', 'prono_hometeam', 'prono_awayteam']
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.user = self.request.user
         return super().form_valid(form)
 
     def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.author:
+        bet = self.get_object()
+        if self.request.user == bet.user:
             return True
         return False
+
 
 class BetDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Bet
     success_url = "/"
 
     def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.author:
+        bet = self.get_object()
+        if self.request.user == bet.user:
             return True
         return False

@@ -1,15 +1,21 @@
 {% extends "blog/base.html" %}
 {% block content %}
 <h1>Mes pronos</h1>
+
+<a class="btn btn-info btn-sm mt-1 mb-1" href="{% url 'bet-create' %}">Faire un autre prono</a>
+
+<!-- Bet index for current user -->
 {% for bet in bets %}
-<article class="media content-section">
-    <p>{{ bet.match.match_date|date:"D d F, Y" }} @ {{ bet.match.match_date|date:"H:m" }}</p><br>
+  <article class="media content-section">
+    <a href="{% url 'bet-detail' bet.id %}"><p>{{ bet.match.match_date|date:"D d F, Y" }} @ {{ bet.match.match_date|date:"H:m" }}</p></a><br>
     <p>{{ bet.match.hometeam.name }} <img src="{{ bet.match.hometeam.image.url }}"> vs <img src="{{ bet.awayteam.hometeam.image.url }}"> {{ bet.awayteam.hometeam.name }}</p>
     <p>{{ bet.prono_hometeam }} - {{ bet.prono_awayteam }}</p>
   </article>
 
   {% endfor %}
 
+
+  <!-- Pagination -->
     {% if is_paginated %}
     {% if page_obj.has_previous %}
         <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
