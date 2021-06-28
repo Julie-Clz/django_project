@@ -6,11 +6,11 @@
         <img class="rounded-circle account-img" src="{{ userteam.image.url }}">
         <div class="media-body">
           <h2 class="account-heading">{{ userteam.name }}</h2>
-          <p>Admin: {{ userteam.user }}</p>
-          <!-- <ul> Members:
+          <p><strong>Admin:</strong>  {{ userteam.user }}</p>
+          <ul class="list-group list-group-flush"><strong>Members:</strong>
           {% for member in members %}
-            <li>{{ member.user }}</li>
-          {% endfor %} -->
+            <li class="list-group-item">{{ member.user }}</li>
+          {% endfor %}
           </ul>
         </div>
       </div>

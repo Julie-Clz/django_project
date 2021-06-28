@@ -93,13 +93,10 @@ def UserteamCreateView(request):
 
 class UserteamDetailView(LoginRequiredMixin, DetailView):
     model = Userteam
-    members = UserteamMember.objects.all()
-    # def test_func(self):
-    #     userteam = self.get_object()
-    #     if self.request.user == userteam.user:
-    #         return True
-    #     return False
-
+    def get_context_data(self, **kwargs):
+        context = super(UserteamDetailView, self).get_context_data(**kwargs)
+        context['members'] = UserteamMember.objects.filter(userteam=self.get_object())
+        return context
 
 class UserteamUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Userteam
