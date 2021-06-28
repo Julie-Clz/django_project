@@ -4,7 +4,6 @@
 <!-- Match index -->
   {% for awayteam in awayteams %}
   <article class="media content-section">
-    <p>{{ awayteam.match.id }}</p>
     <p>{{ awayteam.match.match_date|date:"D d F, Y" }} @ {{ awayteam.match.match_date|date:"H:m" }}</p><br>
     <p>{{ awayteam.match.hometeam.name }} <img src="{{ awayteam.match.hometeam.image.url }}"> vs <img src="{{ awayteam.hometeam.image.url }}"> {{ awayteam.hometeam.name }}</p>
     <p>{{ awayteam.match.goal_hometeam }} - {{ awayteam.match.goal_awayteam }}</p>
