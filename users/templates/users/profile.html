@@ -7,6 +7,11 @@
         <div class="media-body">
           <h2 class="account-heading">{{ user.username }}</h2>
           <p class="text-secondary">{{ user.email }}</p>
+          <ul>Your Team
+          {% for userteam in userteams %}
+            <a href="/userteam/{{ userteam.id }}"><li>{{ userteam.id }} {{ userteam.name }}</li></a>
+          {% endfor %}
+          </ul>
         </div>
       </div>
       <form method="POST" enctype="multipart/form-data">
@@ -23,6 +28,7 @@
     </div>
     <div class="form-group">
       <a class="btn btn-outline-primary" href="{% url 'userteam-create' %}">Create a Team</a>
+      <a href="">Join a Team</a> 
   </div>
 
 {% endblock content %}

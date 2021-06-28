@@ -9,5 +9,9 @@
           <p>Admin: {{ userteam.user }}</p>
         </div>
       </div>
+      <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'userteam-update' object.id %}">Update</a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'userteam-delete' object.id %}">Delete</a>
+      </div>
     </div>
 {% endblock content %}

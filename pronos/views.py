@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from pronos.models import Awayteam, Bet, Userteam
@@ -83,7 +83,8 @@ def UserteamCreateView(request):
         if form.is_valid():
             form.save()
             messages.success(request, f'Your Team has been created!')
-            return redirect('profile')
+            userteam =  Userteam.objects.last()
+            return redirect('userteam-detail', userteam.id)
     else:
         form = UserteamcreateForm()
 
@@ -112,3 +113,14 @@ class UserteamUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if self.request.user == userteam.user:
             return True
         return False
+
+class UserteamDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Userteam
+    success_url = "/"
+
+    def test_func(self):
+        userteam = self.get_object()
+        if self.request.user == userteam.user:
+            return True
+        return False
+        
