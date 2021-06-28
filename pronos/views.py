@@ -91,14 +91,14 @@ def UserteamCreateView(request):
     return render(request, 'pronos/userteam_create.html', {'form': form, 'userteams': userteams })
 
 
-class UserteamDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+class UserteamDetailView(LoginRequiredMixin, DetailView):
     model = Userteam
     members = UserteamMember.objects.all()
-    def test_func(self):
-        userteam = self.get_object()
-        if self.request.user == userteam.user:
-            return True
-        return False
+    # def test_func(self):
+    #     userteam = self.get_object()
+    #     if self.request.user == userteam.user:
+    #         return True
+    #     return False
 
 
 class UserteamUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
