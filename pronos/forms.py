@@ -17,4 +17,4 @@ class BetCreateForm(forms.ModelForm):
 class UserteamcreateForm(forms.ModelForm):
     class Meta:
         model = Userteam
-        fields = ['name', 'image']
+        fields = ['name']
