@@ -1,5 +1,5 @@
 from django import forms
-from .models import Bet, Userteam
+from .models import Bet, Userteam, UserteamMember
 
 class BetCreateForm(forms.ModelForm):
     match = forms.Select()
@@ -18,3 +18,11 @@ class UserteamcreateForm(forms.ModelForm):
     class Meta:
         model = Userteam
         fields = ['name']
+
+class UserteamJoinform(forms.ModelForm):
+    userteam = forms.ModelChoiceField(queryset=Userteam.objects.all())
+
+    class Meta:
+        model = UserteamMember
+        fields = ['userteam']
+        

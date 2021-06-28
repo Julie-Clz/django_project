@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from pronos.models import Awayteam, Bet, Userteam
+from pronos.models import Awayteam, Bet, Userteam, UserteamMember
 from django.contrib.auth.models import User
 from django.views.generic import ListView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import BetCreateForm, UserteamcreateForm
+from .forms import BetCreateForm, UserteamcreateForm, UserteamJoinform
 
 
 class MatchListView(ListView):
@@ -93,6 +93,7 @@ def UserteamCreateView(request):
 
 class UserteamDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Userteam
+    members = UserteamMember.objects.all()
     def test_func(self):
         userteam = self.get_object()
         if self.request.user == userteam.user:
@@ -124,3 +125,19 @@ class UserteamDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
         
+
+@login_required
+def UserteamJoinView(request):
+    if request.method == 'POST':
+        form = UserteamJoinform(request.POST)
+        form.instance.user = request.user
+        # form.instance.userteam = Userteam.name
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your a member of this Team!')
+            userteam =  Userteam.objects.last()
+            return redirect('userteam-detail', userteam.id)
+    else:
+        form = UserteamJoinform()
+
+    return render(request, 'pronos/userteam_join.html', {'form': form})

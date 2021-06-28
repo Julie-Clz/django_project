@@ -56,8 +56,8 @@ class Userteam(models.Model):
     image = models.ImageField(default='profile_pics/default.jpg', upload_to='team_pics')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owner")
 
-    def __repr__(self):
-        return f"Userteam('{self.id}', name: '{self.name}', owner: '{self.user}')"
+    def __str__(self):
+        return self.name
     
     def get_absolute_url(self):
         return reverse('userteam-detail', kwargs={'pk': self.pk})
