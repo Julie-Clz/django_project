@@ -40,3 +40,12 @@ class Bet(models.Model):
 
     def get_absolute_url(self):
         return reverse('bet-detail', kwargs={'pk': self.pk})
+
+
+class UserScore(models.Model):
+    point = models.IntegerField(blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    bet = models.ForeignKey(Bet, on_delete=models.CASCADE)
+
+    def __repr__(self):
+        return f"Userscore('{self.id}', '{self.bet_id}', '{self.point}', '{self.user_id}', '{self.userteam_id}')"
