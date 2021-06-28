@@ -6,7 +6,9 @@
   <article class="media content-section">
     <p>{{ awayteam.match.match_date|date:"D d F, Y" }} @ {{ awayteam.match.match_date|date:"H:m" }}</p><br>
     <p>{{ awayteam.match.hometeam.name }} <img src="{{ awayteam.match.hometeam.image.url }}"> vs <img src="{{ awayteam.hometeam.image.url }}"> {{ awayteam.hometeam.name }}</p>
+    {% if awayteam.match.goal_hometeam is not None %}
     <p>{{ awayteam.match.goal_hometeam }} - {{ awayteam.match.goal_awayteam }}</p>
+    {% endif %}
   </article>
     {% endfor %}
 
