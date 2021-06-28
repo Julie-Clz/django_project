@@ -1,0 +1,13 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+      <div class="media">
+        <img class="rounded-circle account-img" src="{{ userteam.image.url }}">
+        <div class="media-body">
+          <h2 class="account-heading">{{ userteam.name }}</h2>
+          <p>Admin: {{ userteam.user }}</p>
+        </div>
+      </div>
+    </div>
+{% endblock content %}

@@ -1,13 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from pronos.models import Awayteam, Match, Bet
+from pronos.models import Awayteam, Bet, Userteam
 from django.contrib.auth.models import User
 from django.views.generic import ListView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import BetCreateForm
-
-
+from .forms import BetCreateForm, UserteamcreateForm
 
 
 class MatchListView(ListView):
@@ -42,8 +40,13 @@ def BetCreateView(request):
 
     return render(request, 'pronos/bet_create.html', {'form': form, 'awayteams': awayteams })
 
-class BetDetailView(DetailView):
+class BetDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Bet
+    def test_func(self):
+        bet = self.get_object()
+        if self.request.user == bet.user:
+            return True
+        return False
 
 class BetUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Bet
@@ -67,5 +70,45 @@ class BetDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         bet = self.get_object()
         if self.request.user == bet.user:
+            return True
+        return False
+        
+
+@login_required
+def UserteamCreateView(request):
+    userteams = Userteam.objects.all()
+    if request.method == 'POST':
+        form = UserteamcreateForm(request.POST)
+        form.instance.user = request.user
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your Team has been created!')
+            return redirect('profile')
+    else:
+        form = UserteamcreateForm()
+
+    return render(request, 'pronos/userteam_create.html', {'form': form, 'userteams': userteams })
+
+
+class UserteamDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    model = Userteam
+    def test_func(self):
+        userteam = self.get_object()
+        if self.request.user == userteam.user:
+            return True
+        return False
+
+
+class UserteamUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Userteam
+    fields = ['name', 'image']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        userteam = self.get_object()
+        if self.request.user == userteam.user:
             return True
         return False

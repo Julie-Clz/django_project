@@ -21,12 +21,3 @@ class Profile(models.Model):
     #         img.thumbnail(output_size)
     #         img.save(self.image.path)
     # 
-
-
-class Userteam(models.Model):
-    name = models.CharField(max_length=20, unique=True)
-    image = models.ImageField(default='profile_pics/default.jpg', upload_to='team_pics')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __repr__(self):
-        return f"Userteam('{self.id}', '{self.name}', '{self.user}')"

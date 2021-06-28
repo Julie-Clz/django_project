@@ -48,4 +48,24 @@ class UserScore(models.Model):
     bet = models.ForeignKey(Bet, on_delete=models.CASCADE)
 
     def __repr__(self):
-        return f"Userscore('{self.id}', '{self.bet_id}', '{self.point}', '{self.user_id}', '{self.userteam_id}')"
+        return f"Userscore('{self.id}', '{self.bet}', '{self.point}', '{self.user}')"
+
+
+class Userteam(models.Model):
+    name = models.CharField(max_length=20, unique=True)
+    image = models.ImageField(default='profile_pics/default.jpg', upload_to='team_pics')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owner")
+
+    def __repr__(self):
+        return f"Userteam('{self.id}', name: '{self.name}', owner: '{self.user}')"
+    
+    def get_absolute_url(self):
+        return reverse('userteam-detail', kwargs={'pk': self.pk})
+
+
+class UserteamMember(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="member")
+    userteam = models.ForeignKey(Userteam, on_delete=models.CASCADE, related_name="team")
+
+    def __repr__(self):
+        return f"UserteamMember(Team :'{self.userteam}', Member: '{self.user}')"
