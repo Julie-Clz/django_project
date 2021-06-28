@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-from pronos.models import Userteam
+from pronos.models import Userteam, UserteamMember
 
 
 def register(request):
@@ -21,6 +21,7 @@ def register(request):
 @login_required
 def profile(request):
     userteams =  Userteam.objects.filter(user=request.user).all()
+    members =  UserteamMember.objects.filter(user=request.user).all()
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
@@ -37,7 +38,8 @@ def profile(request):
     context = {
         'u_form': u_form,
         'p_form': p_form,
-        'userteams': userteams
+        'userteams': userteams,
+        'members': members
     }
 
     return render(request, 'users/profile.html', context)

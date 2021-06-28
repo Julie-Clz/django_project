@@ -7,11 +7,16 @@
         <div class="media-body">
           <h2 class="account-heading">{{ user.username }}</h2>
           <p class="text-secondary">{{ user.email }}</p>
-          <ul>Your Team
+          <div class="mt-3 mb-3">
+          <ul class="list-group list-group-flush"><strong>Your Team(s) :</strong> 
           {% for userteam in userteams %}
-            <a href="/userteam/{{ userteam.id }}"><li>{{ userteam.id }} {{ userteam.name }}</li></a>
+            <a class="text-decoration-none" href="/userteam/{{ userteam.id }}"><li class="list-group-item">{{ userteam.name }}</li></a>
+          {% endfor %}
+          {% for member in members %}
+            <a class="text-decoration-none" href="/userteam/{{ memeber.userteam.id }}"><li class="list-group-item">{{ member.userteam.name }}</li></a>
           {% endfor %}
           </ul>
+        </div>
         </div>
       </div>
       <form method="POST" enctype="multipart/form-data">
