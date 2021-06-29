@@ -1,34 +1,34 @@
 {% extends "blog/base.html" %}
 {% block content %}
-<h1>Prochains Matchs</h1>
+<h1>Prochains Matchs</h1><br>
 <!-- Match index -->
   {% for awayteam in awayteams %}
-  <article class="media content-section">
-    <p>{{ awayteam.match.match_date|date:"D d F, Y" }} @ {{ awayteam.match.match_date|date:"H:m" }}</p><br>
-    <p>{{ awayteam.match.hometeam.name }} <img src="{{ awayteam.match.hometeam.image.url }}"> vs <img src="{{ awayteam.hometeam.image.url }}"> {{ awayteam.hometeam.name }}</p>
-    {% if awayteam.match.goal_hometeam is not None %}
-    <p>{{ awayteam.match.goal_hometeam }} - {{ awayteam.match.goal_awayteam }}</p>
-    {% endif %}
-  </article>
+    <div class="content-section text-center">
+      <p>{{ awayteam.match.match_date|date:"l d F, Y" }} - {{ awayteam.match.match_date|date:"H:i" }}</p>
+      <h4>{{ awayteam.match.hometeam.name }} <img src="{{ awayteam.match.hometeam.image.url }}"> vs <img src="{{ awayteam.hometeam.image.url }}"> {{ awayteam.hometeam.name }}</h4>
+      {% if awayteam.match.goal_hometeam is not None %}
+        <h4>{{ awayteam.match.goal_hometeam }} - {{ awayteam.match.goal_awayteam }}</h4>
+      {% endif %}
+    </div>
     {% endfor %}
-
+    
 
   <!-- Pagination -->
-    {% if is_paginated %}
+  <!-- {% if is_paginated %}
     {% if page_obj.has_previous %}
-        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-      {% endif %}
-      {% for num in page_obj.paginator.page_range %}
-        {% if page_obj.number == num %}
-          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
-        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
-        {% endif %}
-      {% endfor %}
-      {% if page_obj.has_next %}
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-      {% endif %}
+      <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+      <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
     {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+      {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+      <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+    {% endif %}
+  {% endif %} -->
 {% endblock content %}

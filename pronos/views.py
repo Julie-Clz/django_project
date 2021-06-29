@@ -1,21 +1,30 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from pronos.models import Awayteam, Bet, Userteam, UserteamMember
+from pronos.models import Awayteam, Bet, Match, Userteam, UserteamMember
 from django.contrib.auth.models import User
 from django.views.generic import ListView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import BetCreateForm, UserteamcreateForm, UserteamJoinform
+from datetime import datetime
+from django.utils import timezone
+from django.core.paginator import Paginator
 
-
+# Matchs index - liste all
 class MatchListView(ListView):
     model = Awayteam
-    awayteams = Awayteam.objects.all()
     template_name = 'pronos/match_index.html' # <app>/<model>_<viewtype>.html
     context_object_name = 'awayteams'
-    paginate_by = 4
+
+    def get_context_data(self, **kwargs):
+        context = super(MatchListView, self).get_context_data(**kwargs)
+        context['awayteams'] = Awayteam.objects.all().filter(match__done=False).order_by('-match__match_date')
+        return context
+
+    # paginate_by = 1
 
 
+# Bet views
 class BetListView(LoginRequiredMixin, ListView):
     model = Bet
     template_name = 'pronos/bet_index.html' # <app>/<model>_<viewtype>.html
@@ -28,7 +37,10 @@ class BetListView(LoginRequiredMixin, ListView):
 
 @login_required
 def BetCreateView(request):
+    now = datetime.now()
+    # bets = Bet.objects.filter(Bet.match).all()
     awayteams = Awayteam.objects.all()
+    # awayteams = Awayteam.objects.filter(match=match).order_by('match_date')
     if request.method == 'POST':
         form = BetCreateForm(request.POST)
         if form.is_valid():
@@ -38,7 +50,8 @@ def BetCreateView(request):
     else:
         form = BetCreateForm()
 
-    return render(request, 'pronos/bet_create.html', {'form': form, 'awayteams': awayteams })
+    return render(request, 'pronos/bet_create.html', {'form': form, 'awayteams': awayteams, 'now': now })
+
 
 class BetDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Bet
@@ -48,9 +61,10 @@ class BetDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
             return True
         return False
 
+
 class BetUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Bet
-    fields = ['match', 'hometeam', 'awayteam', 'prono_hometeam', 'prono_awayteam']
+    fields = ['match', 'hometeam', 'prono_hometeam', 'awayteam', 'prono_awayteam']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -74,6 +88,7 @@ class BetDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
         
 
+# Userteam views
 @login_required
 def UserteamCreateView(request):
     userteams = Userteam.objects.all()
@@ -138,3 +153,6 @@ def UserteamJoinView(request):
         form = UserteamJoinform()
 
     return render(request, 'pronos/userteam_join.html', {'form': form})
+
+
+# Scores views
