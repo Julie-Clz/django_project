@@ -79,7 +79,7 @@ class BetUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class BetDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Bet
-    success_url = "/"
+    success_url = "/index/"
 
     def test_func(self):
         bet = self.get_object()
