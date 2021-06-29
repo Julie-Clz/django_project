@@ -35,7 +35,6 @@ ul {
   border-radius: 3px;
   margin-bottom: 20px;
   transition: transform .2s;
-  /* width: 350px; */
 }
 
 .pronos-card:hover {
@@ -96,4 +95,24 @@ a.article-title:hover {
 
 #div_id_prono_awayteam > label {
   display: none;
+}
+
+/* .id-team {
+  border: 1px solid #dddddd;
+  border-radius: 50px;
+  padding: 15px;
+  padding-left: 100px;
+  padding-right: 100px;
+} */
+
+
+.id-team-list-item {
+  display: block;
+  text-decoration: none;
+  margin-top: 3px;
+}
+
+.id-team-list-item a {
+  color: #5f788a;
+  margin-left: 10px;
 }
