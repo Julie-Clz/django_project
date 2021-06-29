@@ -12,8 +12,12 @@
     <div class="d-flex justify-content-around">
       <div class="d-flex align-items-center">
         <div>
-          <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'userteam-update' object.id %}">Update</a>
-          <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'userteam-delete' object.id %}">Delete</a>
+          {% if userteam.user == user %}
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'userteam-update' object.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'userteam-delete' object.id %}">Delete</a>
+          {% else %}
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="#">Quit the team</a>
+          {% endif %}
         </div>
       </div>
       <ul class="id-team mb-3"><strong class="mb-2">Members:</strong>

@@ -114,6 +114,12 @@ class UserteamDetailView(LoginRequiredMixin, DetailView):
         context = super(UserteamDetailView, self).get_context_data(**kwargs)
         context['members'] = UserteamMember.objects.filter(userteam=self.get_object())
         return context
+    
+    def test_func(self):
+        bet = self.get_object()
+        if self.request.user == bet.user:
+            return True
+        return False
 
 
 class UserteamUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
