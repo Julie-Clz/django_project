@@ -115,10 +115,11 @@ class UserteamDetailView(LoginRequiredMixin, DetailView):
         context['members'] = UserteamMember.objects.filter(userteam=self.get_object())
         return context
 
+
 class UserteamUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Userteam
     fields = ['name', 'image']
-
+    
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
@@ -129,9 +130,10 @@ class UserteamUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             return True
         return False
 
+
 class UserteamDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Userteam
-    success_url = "/"
+    success_url = "/profile/"
 
     def test_func(self):
         userteam = self.get_object()

@@ -9,11 +9,11 @@
         {{ form|crispy }}
       </fieldset>
       <div class="form-group">
-        <button class="btn btn-outline-info mt-3" type="submit">Submit</button>
+        <button class="btn btn-outline-info mt-4" type="submit">Submit</button>
       </div>
     </form>
-    <div class="border-top pt-3">
-      <small class="text-muted">Your Team Already exists? <a class="ml-2" href="{% url 'userteam-join' %}">Join It</a></small>
+    <div class="border-top mt-3">
+      <small class="text-muted mt-1">Your Team Already exists? <a class="ml-2" href="{% url 'userteam-join' %}">Join It</a></small>
     </div>
   </div>
 {% endblock content %}

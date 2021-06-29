@@ -1,22 +1,27 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="content-section">
-      <div class="media">
-        <img class="rounded-circle account-img" src="{{ userteam.image.url }}">
-        <div class="media-body">
-          <h2 class="account-heading">{{ userteam.name }}</h2>
-          <p><strong>Admin:</strong>  {{ userteam.user }}</p>
-          <ul class="list-group list-group-flush"><strong>Members:</strong>
-          {% for member in members %}
-            <li class="list-group-item">{{ member.user }}</li>
-          {% endfor %}
-          </ul>
-        </div>
-      </div>
+  <div class="content-section id-card">
+    <div class="d-flex d-inline-block d-flex justify-content-start">
+      <img class="rounded-circle account-img" src="{{ userteam.image.url }}">
       <div>
-        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'userteam-update' object.id %}">Update</a>
-        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'userteam-delete' object.id %}">Delete</a>
+        <h2 class="account-heading">{{ userteam.name }}</h2>
+        <p class="text-muted">Admin : {{ userteam.user.username.capitalize }}</p>
       </div>
     </div>
+    <div class="d-flex justify-content-around">
+      <div class="d-flex align-items-center">
+        <div>
+          <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'userteam-update' object.id %}">Update</a>
+          <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'userteam-delete' object.id %}">Delete</a>
+        </div>
+      </div>
+      <ul class="id-team mb-3"><strong class="mb-2">Members:</strong>
+        {% for member in members %}
+          <li class="id-team-list-item">{{ member.user.username.capitalize }}</li>
+        {% endfor %}
+        <li class="id-team-list-item">{{ userteam.user.username.capitalize }}</li>
+      </ul>
+    </div>
+  </div>
 {% endblock content %}
