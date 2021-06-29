@@ -7,6 +7,7 @@ from django.views.generic import ListView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import BetCreateForm, UserteamcreateForm, UserteamJoinform
 from datetime import datetime
+from crispy_forms.helper import FormHelper
 from django.utils import timezone
 from django.core.paginator import Paginator
 
@@ -64,7 +65,8 @@ class BetDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
 class BetUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Bet
-    fields = ['match', 'hometeam', 'prono_hometeam', 'awayteam', 'prono_awayteam']
+    fields = ['prono_hometeam', 'prono_awayteam']
+    success_url = "/index/"
 
     def form_valid(self, form):
         form.instance.user = self.request.user
