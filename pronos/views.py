@@ -1,15 +1,12 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from pronos.models import Awayteam, Bet, Match, Userteam, UserteamMember
-from django.contrib.auth.models import User
+from pronos.models import Awayteam, Bet, Userteam, UserteamMember
 from django.views.generic import ListView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import BetCreateForm, UserteamcreateForm, UserteamJoinform
 from datetime import datetime
-from django.utils import timezone
-from django.core.paginator import Paginator
-from crispy_forms.helper import FormHelper
+
 
 
 # Matchs index - liste all
@@ -46,9 +43,8 @@ class BetListView(LoginRequiredMixin, ListView):
 @login_required
 def BetCreateView(request):
     now = datetime.now()
-    # bets = Bet.objects.filter(Bet.match).all()
-    awayteams = Awayteam.objects.all()
-    # awayteams = Awayteam.objects.filter(match=match).order_by('match_date')
+    bets = Bet.objects.all()
+    awayteams = Awayteam.objects.all().filter(match__done=False).order_by('match__match_date')
     if request.method == 'POST':
         form = BetCreateForm(request.POST)
         if form.is_valid():
@@ -59,7 +55,7 @@ def BetCreateView(request):
         form = BetCreateForm()
 
     return render(request, 'pronos/bet_create.html', {'form': form, 'awayteams': awayteams, 'now': now })
-
+        
 
 class BetDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Bet
@@ -123,8 +119,8 @@ class UserteamDetailView(LoginRequiredMixin, DetailView):
         return context
     
     def test_func(self):
-        bet = self.get_object()
-        if self.request.user == bet.user:
+        userteam = self.get_object()
+        if self.request.user == userteam.user:
             return True
         return False
 
@@ -170,6 +166,3 @@ def UserteamJoinView(request):
         form = UserteamJoinform()
 
     return render(request, 'pronos/userteam_join.html', {'form': form})
-
-
-# Scores views
