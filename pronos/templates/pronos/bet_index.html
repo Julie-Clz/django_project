@@ -1,12 +1,12 @@
 {% extends "blog/base.html" %}
 {% block content %}
-<h1>Mes pronos</h1><br>
+<h1>Mes pronos en cours</h1><br>
 
 <div class="center">
   <a class="btn btn-outline-info btn-sm mt-1 mb-1" href="{% url 'bet-create' %}">Faire un autre prono</a>
 </div>
 <br>
-<!-- Bet index for current user -->
+<!-- Bet next matchs index for current user -->
 {% for bet in bets %}
   <div class="content-section text-center pronos-card">
     <a class="text-decoration-none text-dark" href="{% url 'bet-detail' bet.id %}">
@@ -16,10 +16,40 @@
     </a>
   </div>
 {% endfor %}
+<br>
+
+<!-- Bet previous matchs index for current user -->
+<button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapsePassed" aria-expanded="false" aria-controls="collapsePassed">
+  Mes Anciens Pronos
+</button><br>
+
+<div class="collapse" id="collapsePassed"><br>
+  {% for donebet in donebets %}
+    <div class="content-section text-center pronos-card">
+      <p>{{ donebet.match.match_date|date:"l d F, Y" }} - {{ donebet.match.match_date|date:"H:i" }}</p>
+      {% if donebet.match.goal_hometeam == donebet.prono_hometeam and donebet.match.goal_awayteam == donebet.prono_awayteam %}
+        <h5><strong>{{ donebet.match.hometeam.name }}<img src="{{ donebet.match.hometeam.image.url }}"> vs <img src="{{ donebet.awayteam.hometeam.image.url }}">{{ donebet.awayteam.hometeam.name }}</strong></h5>
+        <h5><strong>{{ donebet.prono_hometeam }} - {{ donebet.prono_awayteam }}</strong></h5>
+      {% elif donebet.match.goal_hometeam > donebet.match.goal_awayteam and donebet.prono_hometeam > donebet.prono_awayteam %}
+        <h5><strong>{{ donebet.match.hometeam.name }}<img src="{{ donebet.match.hometeam.image.url }}"></strong> vs <img src="{{ donebet.awayteam.hometeam.image.url }}">{{ donebet.awayteam.hometeam.name }}</h5>
+        <h5>{{ donebet.prono_hometeam }} - {{ donebet.prono_awayteam }}</h5>
+      {% elif donebet.match.goal_hometeam < donebet.match.goal_awayteam and donebet.prono_hometeam < donebet.prono_awayteam %}
+        <h5>{{ donebet.match.hometeam.name }}<img src="{{ donebet.match.hometeam.image.url }}"> vs <strong><img src="{{ donebet.awayteam.hometeam.image.url }}">{{ donebet.awayteam.hometeam.name }}</strong></h5>
+        <h5>{{ donebet.prono_hometeam }} - {{ donebet.prono_awayteam }}</h5>
+      {% elif donebet.match.goal_hometeam == donebet.match.goal_awayteam and donebet.prono_hometeam == donebet.prono_awayteam  %}
+        <h5><strong>{{ donebet.match.hometeam.name }}<img src="{{ donebet.match.hometeam.image.url }}"> vs <img src="{{ donebet.awayteam.hometeam.image.url }}">{{ donebet.awayteam.hometeam.name }}</strong></h5>
+        <h5>{{ donebet.prono_hometeam }} - {{ donebet.prono_awayteam }}</h5>
+      {% else %}
+        <h5>{{ donebet.match.hometeam.name }}<img src="{{ donebet.match.hometeam.image.url }}"> vs <img src="{{ donebet.awayteam.hometeam.image.url }}">{{ donebet.awayteam.hometeam.name }}</h5>
+        <h5>{{ donebet.prono_hometeam }} - {{ donebet.prono_awayteam }}</h5>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
 
 
   <!-- Pagination -->
-    {% if is_paginated %}
+    <!-- {% if is_paginated %}
     {% if page_obj.has_previous %}
         <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
         <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
@@ -35,5 +65,5 @@
         <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
         <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
       {% endif %}
-    {% endif %}
+    {% endif %} -->
 {% endblock content %}

@@ -7,33 +7,40 @@ from django.views.generic import ListView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import BetCreateForm, UserteamcreateForm, UserteamJoinform
 from datetime import datetime
-from crispy_forms.helper import FormHelper
 from django.utils import timezone
 from django.core.paginator import Paginator
+from crispy_forms.helper import FormHelper
+
 
 # Matchs index - liste all
 class MatchListView(ListView):
     model = Awayteam
     template_name = 'pronos/match_index.html' # <app>/<model>_<viewtype>.html
-    context_object_name = 'awayteams'
+    # context_object_name = 'awayteams'
+    # paginate_by = 1
 
     def get_context_data(self, **kwargs):
         context = super(MatchListView, self).get_context_data(**kwargs)
         context['awayteams'] = Awayteam.objects.all().filter(match__done=False).order_by('-match__match_date')
+        context['doneawayteams'] = Awayteam.objects.all().filter(match__done=True).order_by('-match__match_date')
         return context
-
-    # paginate_by = 1
 
 
 # Bet views
 class BetListView(LoginRequiredMixin, ListView):
     model = Bet
     template_name = 'pronos/bet_index.html' # <app>/<model>_<viewtype>.html
-    context_object_name = 'bets'
+    # context_object_name = 'bets'
     paginate_by = 4
 
     def get_queryset(self):
         return self.model.objects.filter(user=self.request.user)
+    
+    def get_context_data(self, **kwargs):
+        context = super(BetListView, self).get_context_data(**kwargs)
+        context['bets'] = Bet.objects.all().filter(match__done=False).order_by('-match__match_date')
+        context['donebets'] = Bet.objects.all().filter(match__done=True).order_by('-match__match_date')
+        return context
 
 
 @login_required

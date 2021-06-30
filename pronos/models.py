@@ -18,7 +18,7 @@ class Match(models.Model):
     hometeam = models.ForeignKey(Hometeam, on_delete=models.CASCADE, related_name='hometeam')
 
     def __str__(self):
-        return str(self.match_date.strftime('%d/%m/%Y - %H:%M'))
+        return str(self.match_date.strftime('%d/%m/%Y %H:%M'))
    
 
 class Awayteam(models.Model):

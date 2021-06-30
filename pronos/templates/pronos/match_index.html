@@ -1,17 +1,39 @@
 {% extends "blog/base.html" %}
 {% block content %}
 <h1>Prochains Matchs</h1><br>
-<!-- Match index -->
-  {% for awayteam in awayteams %}
+<!-- Next Match index -->
+{% for awayteam in awayteams %}
+  <div class="content-section text-center">
+    <p>{{ awayteam.match.match_date|date:"l d F, Y" }} - {{ awayteam.match.match_date|date:"H:i" }}</p>
+    <h4>{{ awayteam.match.hometeam.name }} <img src="{{ awayteam.match.hometeam.image.url }}"> vs <img src="{{ awayteam.hometeam.image.url }}"> {{ awayteam.hometeam.name }}</h4>
+    <!-- {% if awayteam.match.goal_hometeam is not None %}
+      <h4>{{ awayteam.match.goal_hometeam }} - {{ awayteam.match.goal_awayteam }}</h4>
+    {% endif %} -->
+  </div>
+{% endfor %}
+
+<h1>Anciens Matchs</h1><br>
+<!-- Previous Match index -->
+<button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapsePassed" aria-expanded="false" aria-controls="collapsePassed">
+  Anciens Matchs
+</button><br>
+
+<div class="collapse" id="collapsePassed"><br>
+  {% for doneawayteam in doneawayteams %}
     <div class="content-section text-center">
-      <p>{{ awayteam.match.match_date|date:"l d F, Y" }} - {{ awayteam.match.match_date|date:"H:i" }}</p>
-      <h4>{{ awayteam.match.hometeam.name }} <img src="{{ awayteam.match.hometeam.image.url }}"> vs <img src="{{ awayteam.hometeam.image.url }}"> {{ awayteam.hometeam.name }}</h4>
-      {% if awayteam.match.goal_hometeam is not None %}
-        <h4>{{ awayteam.match.goal_hometeam }} - {{ awayteam.match.goal_awayteam }}</h4>
+      <p>{{ doneawayteam.match.match_date|date:"l d F, Y" }} - {{ doneawayteam.match.match_date|date:"H:i" }}</p>
+      {% if doneawayteam.match.goal_hometeam > doneawayteam.match.goal_awayteam %}
+        <h5><strong>{{ doneawayteam.match.hometeam.name }} <img src="{{ doneawayteam.match.hometeam.image.url }}"></strong> vs <small><img src="{{ doneawayteam.hometeam.image.url }}"> {{ doneawayteam.hometeam.name }}</small></h5>
+      {% elif doneawayteam.match.goal_hometeam < doneawayteam.match.goal_awayteam %}
+        <h5><small>{{ doneawayteam.match.hometeam.name }} <img src="{{ doneawayteam.match.hometeam.image.url }}"></small> vs <strong><img src="{{ doneawayteam.hometeam.image.url }}"> {{ doneawayteam.hometeam.name }}</strong></h5>
+      {% else %}
+        <h5>{{ doneawayteam.match.hometeam.name }} <img src="{{ doneawayteam.match.hometeam.image.url }}"> vs <img src="{{ doneawayteam.hometeam.image.url }}"> {{ doneawayteam.hometeam.name }}</h5>
+        <p class="text-muted tect-center">Match nul</p>
       {% endif %}
+      <h5>{{ doneawayteam.match.goal_hometeam }} - {{ doneawayteam.match.goal_awayteam }}</h5>
     </div>
-    {% endfor %}
-    
+  {% endfor %}
+
 
   <!-- Pagination -->
   <!-- {% if is_paginated %}
