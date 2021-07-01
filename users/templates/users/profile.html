@@ -7,6 +7,10 @@
     <div>
       <h2 class="account-heading">{{ user.username.capitalize }}</h2>
       <p class="text-secondary">{{ user.email }}</p>
+      <!-- <p class="text-secondary">Pronos : {{ bets_num }}</p> -->
+      <!-- <p class="text-secondary">Terminés : {{ bets_finish }}</p> -->
+      <p class="text-secondary">Points : {{ points }}</p>
+      <p><a class="text-decoration-none" href="{% url 'user-stats' %}">Mes Statistiques</a>
     </div>
   </div>
   <div class="d-flex justify-content-around">

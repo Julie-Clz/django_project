@@ -1,0 +1,47 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section id-card">
+  <div class="d-flex d-inline-block d-flex justify-content-start">
+    <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+    <div>
+      <h2 class="account-heading">{{ user.username.capitalize }}</h2>
+      <p class="text-secondary">{{ user.email }}</p>
+      <h4 class="text-muted">Points : {{ points }}</h4><br>
+      <ul class=""><strong class="">Team(s) :</strong> 
+        {% for userteam in userteams %}
+          <li class="id-team-list-item"><a class="text-decoration-none" href="/userteam/{{ userteam.id }}">{{ userteam.name }} (Admin)</a></li>
+        {% endfor %}
+        {% for member in members %}
+          <li class="id-team-list-item"><a class="text-decoration-none" href="/userteam/{{ member.userteam.id }}">{{ member.userteam.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+  <div class="content-section">
+    <h4 class="">Mes Statistiques :</h4><br>
+    <ul>
+      {% for bet in bets %}
+        {% if bet.match.done == True %}
+          <li><strong>{{ bet.match.match_date|date:"l d F, Y - H:i" }} : {{ bet.match.hometeam.name }} vs {{ bet.awayteam.hometeam.name }}</strong></li>
+            <ul>
+              <li class="id-team-list-item">Prono : {{ bet.prono_hometeam }} - {{ bet.prono_awayteam }}</li>
+              <li class="id-team-list-item">Score : {{ bet.match.goal_hometeam }} - {{ bet.match.goal_awayteam }}</li>
+              <li class="id-team-list-item">➡️ Point(s) : {{ bet.point }}</li>
+            </ul><br>
+        {% else %}
+          <li><strong>{{ bet.match.match_date|date:"l d F, Y - H:i" }} : {{ bet.match.hometeam.name }} vs {{ bet.awayteam.hometeam.name }}</strong></li>
+          <ul>
+            <li class="id-team-list-item">Prono : {{ bet.prono_hometeam }} - {{ bet.prono_awayteam }}</li>
+            <li class="id-team-list-item">➡️ En cours</li>
+        </ul><br>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+
+<!-- <p class="text-secondary">Pronos : {{ bets_num }}</p> -->
+<!-- <p class="text-secondary">Terminés : {{ bets_finish }}</p> -->
+{% endblock content %}
