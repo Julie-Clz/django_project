@@ -1,0 +1,15 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="content-section ">
+  <div class="article-metadata">
+    <h1>details match</h1>
+      <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'match-update' object.id %}">Update</a>
+  </div>
+
+  <p class="text-center">{{ match.match_date|date:"l d F, Y" }} - {{ match.match_date|date:"H:i" }}</p>
+  <h2 class="text-center">{{ match.hometeam }} <small>vs</small> {{ match.awayteam }}</h2>
+  <h4 class="text-center"> Score : {{ match.goal_hometeam }} - {{ match.goal_awayteam }}</h4>
+  <h4 class="text-center"> Done : {{ match.done }}</h4>
+</div>
+
+{% endblock content %}

@@ -20,6 +20,9 @@ class Match(models.Model):
     def __str__(self):
         return str(self.match_date.strftime('%d/%m/%Y %H:%M'))
    
+    def get_absolute_url(self):
+        return reverse('match-detail', kwargs={'pk': self.pk})
+
 
 class Awayteam(models.Model):
     hometeam = models.ForeignKey(Hometeam, on_delete=models.CASCADE, related_name='team')
@@ -35,7 +38,7 @@ class Bet(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     hometeam = models.ForeignKey(Hometeam, on_delete=models.CASCADE)
     awayteam = models.ForeignKey(Awayteam, on_delete=models.CASCADE)
-    point = models.PositiveBigIntegerField(blank=True, null=True)
+    point = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return str(self.id)

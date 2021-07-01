@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from pronos.models import Awayteam, Bet, Userteam, UserteamMember
+from pronos.models import Awayteam, Bet, Match, Userteam, UserteamMember
 from django.views.generic import ListView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import BetCreateForm, UserteamcreateForm, UserteamJoinform
@@ -21,6 +21,60 @@ class MatchListView(ListView):
         context['awayteams'] = Awayteam.objects.all().filter(match__done=False).order_by('-match__match_date')
         context['doneawayteams'] = Awayteam.objects.all().filter(match__done=True).order_by('-match__match_date')
         return context
+
+class MatchDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    model = Match
+
+    def test_func(self):
+        if self.request.user.username == 'julie':
+            return True
+        return False
+
+class MatchUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    pass
+    model = Match
+    fields = ['goal_hometeam', 'goal_awayteam', 'done']
+
+    def test_func(self):
+        if self.request.user.username == 'julie':
+            return True
+        return False
+
+    def post(self, request, pk):
+        match = self.object = self.get_object()
+        form = self.get_form()
+        if not form.is_valid():
+            return super().form_invalid(form)
+        form.save()
+        done = match.done
+        match_id = match.id
+        home_score = match.goal_hometeam
+        away_score = match.goal_awayteam
+        if done == True:
+            bets = Bet.objects.filter(match=match_id)
+            for bet in bets:
+                if home_score == bet.prono_hometeam and away_score == bet.prono_awayteam:
+                    bet.point = 3
+                    bet.save()
+                elif home_score < away_score and bet.prono_hometeam < bet.prono_awayteam:
+                    bet.point = 1
+                    bet.save()
+                elif home_score > away_score and bet.prono_hometeam > bet.prono_awayteam:
+                    bet.point = 1
+                    bet.save()
+                elif home_score == away_score and bet.prono_hometeam == bet.prono_awayteam:
+                    bet.point = 1
+                    bet.save()
+                else:
+                    bet.point = 0
+                    bet.save()
+            return HttpResponse('Point Successfully Updated!')
+        else:
+            bets = Bet.objects.filter(match=match_id)
+            for bet in bets:
+                bet.point = 0
+                bet.save()
+            return HttpResponse('Point Successfully RAZ!')
 
 
 # Bet views
