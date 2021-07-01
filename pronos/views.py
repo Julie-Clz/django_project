@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.models import User
 from pronos.models import Awayteam, Bet, Match, Userteam, UserteamMember
 from django.views.generic import ListView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -18,7 +19,7 @@ class MatchListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(MatchListView, self).get_context_data(**kwargs)
-        context['awayteams'] = Awayteam.objects.all().filter(match__done=False).order_by('-match__match_date')
+        context['awayteams'] = Awayteam.objects.all().filter(match__done=False).order_by('match__match_date')
         context['doneawayteams'] = Awayteam.objects.all().filter(match__done=True).order_by('-match__match_date')
         return context
 
@@ -82,15 +83,12 @@ class BetListView(LoginRequiredMixin, ListView):
     model = Bet
     template_name = 'pronos/bet_index.html' # <app>/<model>_<viewtype>.html
     # context_object_name = 'bets'
-    paginate_by = 4
-
-    def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user)
+    # paginate_by = 4
     
     def get_context_data(self, **kwargs):
         context = super(BetListView, self).get_context_data(**kwargs)
-        context['bets'] = Bet.objects.all().filter(match__done=False).order_by('-match__match_date')
-        context['donebets'] = Bet.objects.all().filter(match__done=True).order_by('-match__match_date')
+        context['bets'] = Bet.objects.all().filter(user=self.request.user).filter(match__done=False).order_by('-match__match_date')
+        context['donebets'] = Bet.objects.all().filter(user=self.request.user).filter(match__done=True).order_by('-match__match_date')
         return context
 
 
