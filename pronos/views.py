@@ -88,7 +88,7 @@ class BetListView(LoginRequiredMixin, ListView):
     
     def get_context_data(self, **kwargs):
         context = super(BetListView, self).get_context_data(**kwargs)
-        context['bets'] = Bet.objects.all().filter(user=self.request.user).filter(match__done=False).order_by('-match__match_date')
+        context['bets'] = Bet.objects.all().filter(user=self.request.user).filter(match__done=False).order_by('match__match_date')
         context['donebets'] = Bet.objects.all().filter(user=self.request.user).filter(match__done=True).order_by('-match__match_date')
         return context
 
