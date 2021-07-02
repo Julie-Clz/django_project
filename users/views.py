@@ -59,7 +59,7 @@ def statistiques(request):
     userteams =  Userteam.objects.filter(user=request.user).all()
     members =  UserteamMember.objects.filter(user=request.user).all()
     points = Bet.objects.filter(user=request.user).aggregate(sum_point=Sum('point')).get('sum_point')
-    bets = bets_num = Bet.objects.filter(user=request.user).all()
+    bets = Bet.objects.filter(user=request.user).all()
     bets_num = Bet.objects.filter(user=request.user).count()
     bets_finish = Bet.objects.filter(user=request.user).filter(match__done=True).count()
     points_max = bets_num * 3

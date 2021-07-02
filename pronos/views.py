@@ -1,3 +1,4 @@
+from django.contrib.auth import models
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -7,7 +8,7 @@ from django.views.generic import ListView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import BetCreateForm, UserteamcreateForm, UserteamJoinform
 from datetime import datetime
-
+from django.db.models import Sum
 
 
 # Matchs index - liste all
@@ -100,9 +101,7 @@ def BetCreateView(request):
     if request.method == 'POST':
         form = BetCreateForm(request.POST)
         if form.is_valid():
-            match = form.instance.match
-            user = form.instance.user
-            bet = Bet.objects.all().filter(match=match).filter(user=user)
+            bet = Bet.objects.all().filter(match=form.instance.match).filter(user=form.instance.user)
             if bet.exists():
                 messages.warning(request, f'Your prono already exist!')
                 form = BetCreateForm() 
@@ -175,6 +174,8 @@ class UserteamDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(UserteamDetailView, self).get_context_data(**kwargs)
         context['members'] = UserteamMember.objects.filter(userteam=self.get_object())
+        points = Bet.objects.values('user__username').annotate(Sum('point'))
+        context['user_points'] = Bet.objects.values('user__username').annotate(points=Sum('point')).order_by('-points')
         return context
     
     def test_func(self):
