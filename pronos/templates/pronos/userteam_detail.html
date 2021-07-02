@@ -31,8 +31,12 @@
   <div class="content-section">
     <h4 class="mb-3">Classement</h4>
 
-    {% for user_point in user_points %}
-      <li class="id-team-list-item">{{ forloop.counter }} - {{ user_point.user__username.capitalize }} : {{ user_point.points }} Point(s)</li>
+    {% for member in members %}
+      {% for user_point in user_points %}
+        {% if user_point.user__username == userteam.user.username or user_point.user__username == member.user.username %}
+          <li class="id-team-list-item">{{ forloop.counter }} - {{ user_point.user__username.capitalize }} : {{ user_point.points }} Point(s)</li>
+        {% endif %}
+      {% endfor %}
     {% endfor %}
  
 
