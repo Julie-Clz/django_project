@@ -13,14 +13,14 @@
       <div class="d-flex align-items-center">
         <div>
           {% if userteam.user == user %}
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'userteam-update' object.id %}">Update</a>
-            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'userteam-delete' object.id %}">Delete</a>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'userteam-update' object.id %}">Modifier</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'userteam-delete' object.id %}">Supprimer</a>
           {% else %}
-            <a class="btn btn-danger btn-sm mt-1 mb-1" href="#">Quit the team</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="#">Quitter la team</a>
           {% endif %}
         </div>
       </div>
-      <ul class="id-team mb-3"><strong class="mb-2">Members:</strong>
+      <ul class="id-team mb-3"><strong class="mb-2">Membres:</strong>
         {% for member in members %}
           <li class="id-team-list-item">{{ member.user.username.capitalize }}</li>
         {% endfor %}

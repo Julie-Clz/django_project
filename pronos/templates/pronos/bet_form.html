@@ -1,7 +1,7 @@
 {% extends "blog/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<h1>Update Your Prono</h1>
+<h1>Modifie ton Prono</h1>
   <div class="content-section mt-4" >
     <p class="text-center">{{ object.match.match_date|date:"l d F, Y" }} - {{ object.match.match_date|date:"H:i" }}</p>
     <h2 class="text-center">{{ object.hometeam }} <small>vs</small> {{ object.awayteam }}</h2>
@@ -20,7 +20,7 @@
         </div>
       </fieldset>
       <div class="form-group d-flex justify-content-center">
-        <button class="btn btn-outline-info mt-3" type="submit">Update</button>
+        <button class="btn btn-outline-info mt-3" type="submit">Modifier</button>
       </div>
     </form>
   </div>

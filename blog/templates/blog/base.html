@@ -27,7 +27,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarToggle">
           <div class="navbar-nav mr-auto">
-            <a class="nav-item nav-link" href="{% url 'match-index' %}">Home</a>
+            <a class="nav-item nav-link" href="{% url 'match-index' %}">Accueil</a>
             
           </div>
           <!-- Navbar Right Side -->
@@ -36,10 +36,10 @@
               <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
               <a class="nav-item nav-link" href="{% url 'bet-index' %}">Mes pronos</a>
               <a class="nav-item nav-link" href="{% url 'bet-create' %}">Faire mes pronos</a>
-              <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+              <a class="nav-item nav-link" href="{% url 'logout' %}">Se déconnecter</a>
               {% else %}
-              <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
-              <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
+              <a class="nav-item nav-link" href="{% url 'login' %}">Se connecter</a>
+              <a class="nav-item nav-link" href="{% url 'register' %}">S'inscrire</a>
             {% endif %}
           </div>
         </div>

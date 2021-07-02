@@ -3,15 +3,15 @@
 <div class="content-section ">
   <div class="article-metadata">
     {% if object.user == user %}
-      <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'bet-update' object.id %}">Update</a>
-      <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'bet-delete' object.id %}">Delete</a>
+      <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'bet-update' object.id %}">Modifier</a>
+      <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'bet-delete' object.id %}">Supprimer</a>
     {% endif %}
   </div>
   <p class="text-center">{{ object.match.match_date|date:"l d F, Y" }} - {{ object.match.match_date|date:"H:i" }}</p>
   <h2 class="text-center">{{ object.hometeam }} <small>vs</small> {{ object.awayteam }}</h2>
   <h4 class="text-center"> Prono : {{ object.prono_hometeam }} - {{ object.prono_awayteam }}</h4>
   
-  {% if object.match.done == True %}
+  <!-- {% if object.match.done == True %}
     {% if object.match.goal_hometeam == object.prono_hometeam and object.match.goal_awayteam == object.prono_awayteam %}
       <h4 class="text-center"> Score : {{ object.match.goal_hometeam }} - {{ object.match.goal_awayteam }}</h4>
       <h4 class="text-center"> Point(s): + 3 </h4>
@@ -28,7 +28,7 @@
       <h4 class="text-center"> Score : {{ object.match.goal_hometeam }} - {{ object.match.goal_awayteam }}</h4>
       <h4 class="text-center"> Point(s): 0 </h4>
     {% endif %}
-  {% endif %}
+  {% endif %} -->
 </div>
 
 {% endblock content %}

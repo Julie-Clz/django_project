@@ -2,8 +2,8 @@
 {% block content %}
 <div class="content-section ">
   <div class="article-metadata">
-    <h1>details match</h1>
-      <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'match-update' object.id %}">Update</a>
+    <h1>Détails des matchs</h1>
+      <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'match-update' object.id %}">Modifier</a>
   </div>
 
   <p class="text-center">{{ match.match_date|date:"l d F, Y" }} - {{ match.match_date|date:"H:i" }}</p>

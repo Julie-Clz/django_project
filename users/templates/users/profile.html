@@ -16,8 +16,8 @@
   <div class="d-flex justify-content-around">
     <div class="d-flex align-items-center">
       <div>
-        <a class="btn btn-outline-primary mb-2" href="{% url 'userteam-create' %}">Create a Team</a>
-        <a class="btn btn-outline-primary mb-2" href="{% url 'userteam-join' %}">Join a Team</a> 
+        <a class="btn btn-outline-primary mb-2" href="{% url 'userteam-create' %}">Créer une Team</a>
+        <a class="btn btn-outline-primary mb-2" href="{% url 'userteam-join' %}">Rejoindre une Team</a> 
       </div>
     </div> 
     <ul class="id-team mb-3"><strong class="mb-2">Team(s) :</strong> 
@@ -35,14 +35,14 @@
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     <fieldset class="form-group">
-      <legend class="border-bottom mb-4">Profile Info</legend>
+      <legend class="border-bottom mb-4">Infos du Profile</legend>
       {{ u_form|crispy }}
       <div class="mt-2">
         {{ p_form|crispy }}
       </div>
     </fieldset>
     <div class="form-group mt-3">
-      <button class="btn btn-outline-info" type="submit">Update</button>
+      <button class="btn btn-outline-info" type="submit">Modifier</button>
     </div>
   </form>
 </div>

@@ -4,13 +4,13 @@
   <form action="" method="POST">
     {% csrf_token %}
     <fieldset class="form-group">
-      <legend class="border-bottom mb-4">Delete Your Team</legend>
-      <h5 class="mb-3">Are you sure you want to delete this team ?</h5>
+      <legend class="border-bottom mb-4">Supprime ta Team</legend>
+      <h5 class="mb-3">Es-tu sûr de vouloir supprimer cette team ?</h5>
       <h2 class="text-center">{{ object.name }}</h2>
     </fieldset>
     <div class="form-group">
-      <button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
-      <a class="btn btn-outline-secondary" href="{% url 'userteam-detail' object.id %}">Cancel</a>
+      <button class="btn btn-outline-danger" type="submit">Oui, Supprimer</button>
+      <a class="btn btn-outline-secondary" href="{% url 'userteam-detail' object.id %}">Annuler</a>
     </div>
     </div>
   </form>
