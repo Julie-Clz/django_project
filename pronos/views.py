@@ -94,19 +94,26 @@ class BetListView(LoginRequiredMixin, ListView):
 
 @login_required
 def BetCreateView(request):
-    now = datetime.now()
+    # now = datetime.now()
     bets = Bet.objects.all()
     awayteams = Awayteam.objects.all().filter(match__done=False).order_by('match__match_date')
     if request.method == 'POST':
         form = BetCreateForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, f'Your prono has been created!')
-            return redirect('bet-index')
+            match = form.instance.match
+            user = form.instance.user
+            bet = Bet.objects.all().filter(match=match).filter(user=user)
+            if bet.exists():
+                messages.warning(request, f'Your prono already exist!')
+                form = BetCreateForm() 
+            else:
+                form.save()
+                messages.success(request, f'Your prono has been created!')
+                return redirect('bet-index')
     else:
         form = BetCreateForm()
 
-    return render(request, 'pronos/bet_create.html', {'form': form, 'awayteams': awayteams, 'now': now })
+    return render(request, 'pronos/bet_create.html', {'form': form, 'awayteams': awayteams, 'bets': bets })
         
 
 class BetDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
