@@ -9,6 +9,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import BetCreateForm, UserteamcreateForm, UserteamJoinform
 from datetime import datetime
 from django.db.models import Sum
+from django.utils.functional import cached_property
+import pytz
+from django.utils import timezone
 
 
 # Matchs index - liste all
@@ -103,11 +106,11 @@ def BetCreateView(request):
         if form.is_valid():
             bet = Bet.objects.all().filter(match=form.instance.match).filter(user=form.instance.user)
             if bet.exists():
-                messages.warning(request, f'Your prono already exist!')
+                messages.warning(request, f'Ton prono existe déjà!')
                 form = BetCreateForm() 
             else:
                 form.save()
-                messages.success(request, f'Your prono has been created!')
+                messages.success(request, f'Ton prono a bien été crée!')
                 return redirect('bet-index')
     else:
         form = BetCreateForm()
@@ -126,11 +129,24 @@ class BetDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
 class BetUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Bet
+    now = datetime.now()
     fields = ['prono_hometeam', 'prono_awayteam']
     success_url = "/index/"
 
+    @cached_property
+    def can_be_modified(self):
+        now = timezone.now()
+        if self.object.match.match_date >= now:
+            return True
+        return False
+
     def form_valid(self, form):
         form.instance.user = self.request.user
+        if not self.can_be_modified:
+            messages.warning(self.request, 'Trop tard... Le match a déjà commencé ou est terminé!')
+            bet =  Bet.objects.last()
+            return redirect('bet-index')
+        messages.success(self.request, 'Ton prono a bien été modifié!')
         return super().form_valid(form)
 
     def test_func(self):
@@ -160,7 +176,7 @@ def UserteamCreateView(request):
         form.instance.user = request.user
         if form.is_valid():
             form.save()
-            messages.success(request, f'Your Team has been created!')
+            messages.success(request, f'Ta Team a bien été créée!')
             userteam =  Userteam.objects.last()
             return redirect('userteam-detail', userteam.id)
     else:
@@ -219,7 +235,7 @@ def UserteamJoinView(request):
         # form.instance.userteam = Userteam.name
         if form.is_valid():
             form.save()
-            messages.success(request, f'Your a member of this Team!')
+            messages.success(request, f'Tu es maintenant membre de cette Team!')
             userteam =  Userteam.objects.last()
             return redirect('userteam-detail', userteam.id)
     else:
