@@ -1,4 +1,5 @@
 from django.contrib.auth import models
+from django.forms.widgets import ChoiceWidget
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -38,7 +39,7 @@ class MatchDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 class MatchUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     pass
     model = Match
-    fields = ['goal_hometeam', 'goal_awayteam', 'done']
+    fields = ['goal_hometeam', 'goal_awayteam', 'done', 'winner']
 
     def test_func(self):
         if self.request.user.username == 'julie':
@@ -55,10 +56,14 @@ class MatchUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         match_id = match.id
         home_score = match.goal_hometeam
         away_score = match.goal_awayteam
+        winner = match.winner
         if done == True:
             bets = Bet.objects.filter(match=match_id)
             for bet in bets:
                 if home_score == bet.prono_hometeam and away_score == bet.prono_awayteam:
+                    bet.point = 3
+                    bet.save()
+                elif home_score == bet.prono_hometeam and away_score == bet.prono_awayteam and winner == bet.winner:
                     bet.point = 3
                     bet.save()
                 elif home_score < away_score and bet.prono_hometeam < bet.prono_awayteam:
@@ -68,6 +73,9 @@ class MatchUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
                     bet.point = 1
                     bet.save()
                 elif home_score == away_score and bet.prono_hometeam == bet.prono_awayteam:
+                    bet.point = 1
+                    bet.save()
+                elif home_score == away_score and bet.prono_hometeam == bet.prono_awayteam and winner == bet.winner:
                     bet.point = 1
                     bet.save()
                 else:
@@ -130,7 +138,7 @@ class BetDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 class BetUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Bet
     now = datetime.now()
-    fields = ['prono_hometeam', 'prono_awayteam']
+    fields = ['prono_hometeam', 'prono_awayteam', 'tab', 'winner']
     success_url = "/index/"
 
     @cached_property

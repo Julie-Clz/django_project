@@ -26,6 +26,12 @@
         <h5><strong>{{ doneawayteam.match.hometeam.name }} <img src="{{ doneawayteam.match.hometeam.image.url }}"></strong> vs <small><img src="{{ doneawayteam.hometeam.image.url }}"> {{ doneawayteam.hometeam.name }}</small></h5>
       {% elif doneawayteam.match.goal_hometeam < doneawayteam.match.goal_awayteam %}
         <h5><small>{{ doneawayteam.match.hometeam.name }} <img src="{{ doneawayteam.match.hometeam.image.url }}"></small> vs <strong><img src="{{ doneawayteam.hometeam.image.url }}"> {{ doneawayteam.hometeam.name }}</strong></h5>
+      {% elif doneawayteam.match.goal_hometeam == doneawayteam.match.goal_awayteam and doneawayteam.match.winner == 'hometeam' %}
+      <h5><strong>{{ doneawayteam.match.hometeam.name }} <img src="{{ doneawayteam.match.hometeam.image.url }}"></strong> vs <small><img src="{{ doneawayteam.hometeam.image.url }}"> {{ doneawayteam.hometeam.name }}</small></h5>
+        <p class="text-muted tect-center">t.a.b</p>
+      {% elif doneawayteam.match.goal_hometeam == doneawayteam.match.goal_awayteam and doneawayteam.match.winner == 'awayteam' %}
+      <h5><small>{{ doneawayteam.match.hometeam.name }} <img src="{{ doneawayteam.match.hometeam.image.url }}"></small> vs <strong><img src="{{ doneawayteam.hometeam.image.url }}"> {{ doneawayteam.hometeam.name }}</strong></h5>
+        <p class="text-muted tect-center">t.a.b</p>
       {% else %}
         <h5>{{ doneawayteam.match.hometeam.name }} <img src="{{ doneawayteam.match.hometeam.image.url }}"> vs <img src="{{ doneawayteam.hometeam.image.url }}"> {{ doneawayteam.hometeam.name }}</h5>
         <p class="text-muted tect-center">Match nul</p>

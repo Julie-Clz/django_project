@@ -15,6 +15,7 @@ class Match(models.Model):
     goal_hometeam = models.PositiveIntegerField(blank=True, null=True)
     goal_awayteam = models.PositiveIntegerField(blank=True, null=True)
     done = models.BooleanField(default=False)
+    winner = models.CharField(max_length=50, blank=True, null=True)
     hometeam = models.ForeignKey(Hometeam, on_delete=models.CASCADE, related_name='hometeam')
 
     def __str__(self):
@@ -39,7 +40,9 @@ class Bet(models.Model):
     hometeam = models.ForeignKey(Hometeam, on_delete=models.CASCADE)
     awayteam = models.ForeignKey(Awayteam, on_delete=models.CASCADE)
     point = models.PositiveIntegerField(default=0)
-
+    winner =models.CharField(max_length=100, blank=True, null=True)
+    tab = models.BooleanField(default=False)
+    
     def __str__(self):
         return str(self.id)
 
