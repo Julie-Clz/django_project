@@ -9,7 +9,7 @@
 {% for bet in bets %}
   <div class="content-section text-center pronos-card">
     <a class="text-decoration-none text-dark" href="{% url 'bet-detail' bet.id %}">
-      <p>{{ bet.match.match_date|date:"l d F, Y" }} - {{ bet.match.match_date|date:"H:i" }}</p>
+      <p>{{ bet.match.match_date|date:"l d F Y" }} - {{ bet.match.match_date|date:"H:i" }}</p>
       <h6>{{ bet.match.hometeam.name }}<img src="{{ bet.match.hometeam.image.url }}"> vs <img src="{{ bet.awayteam.hometeam.image.url }}">{{ bet.awayteam.hometeam.name }}</h6>
       <h6>{{ bet.prono_hometeam }} - {{ bet.prono_awayteam }}</h6>
       {% if bet.tab == True %}
@@ -28,14 +28,14 @@
 <div class="collapse" id="collapsePassed"><br>
   {% for donebet in donebets %}
     <div class="content-section text-center pronos-card">
-      <p>{{ donebet.match.match_date|date:"l d F, Y" }} - {{ donebet.match.match_date|date:"H:i" }}</p>
+      <p>{{ donebet.match.match_date|date:"l d F Y" }} - {{ donebet.match.match_date|date:"H:i" }}</p>
       <h6>{{ donebet.match.hometeam.name }}<img src="{{ donebet.match.hometeam.image.url }}"> vs <img src="{{ donebet.awayteam.hometeam.image.url }}">{{ donebet.awayteam.hometeam.name }}</h6>
       {% if donebet.tab == True %}
         <h6>Prono : {{ donebet.prono_hometeam }} - {{ donebet.prono_awayteam }} | tab - {{ donebet.winner }} (vainqueur)</h6>
       {% else %}
         <h6>Prono : {{ donebet.prono_hometeam }} - {{ donebet.prono_awayteam }}</h6>
       {% endif %}
-      {% if donebet.match.winner != "" %}
+      {% if donebet.match.winner != none %}
         <h6>Score : {{ donebet.match.goal_hometeam }} - {{ donebet.match.goal_awayteam }} | tab - {{ donebet.match.winner}} (vainqueur)</h6>
       {% else %}
         <h6>Score : {{ donebet.match.goal_hometeam }} - {{ donebet.match.goal_awayteam }}</h6>

@@ -4,7 +4,7 @@
 <!-- Next Match index -->
 {% for awayteam in awayteams %}
   <div class="content-section text-center">
-    <p>{{ awayteam.match.match_date|date:"l d F, Y" }} - {{ awayteam.match.match_date|date:"H:i" }}</p>
+    <p>{{ awayteam.match.match_date|date:"l d F Y" }} - {{ awayteam.match.match_date|date:"H:i" }}</p>
     <h6>{{ awayteam.match.hometeam.name }} <img src="{{ awayteam.match.hometeam.image.url }}"> vs <img src="{{ awayteam.hometeam.image.url }}"> {{ awayteam.hometeam.name }}</h6>
   </div>
 {% endfor %}
