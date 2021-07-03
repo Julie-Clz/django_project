@@ -1,84 +1,61 @@
 {% extends "blog/base.html" %}
 {% block content %}
 <h1>Fais tes Pronos</h1><br>
-    {% for awayteam in awayteams %}
-      <div class="content-section text-center">
-<!-- bet display data from awayteam (matchs to bet on) -->
-        <p>{{ awayteam.match.match_date|date:"l d F, Y" }} - {{ awayteam.match.match_date|date:"H:i" }}</p>
-        <h4>{{ awayteam.match.hometeam.name }} <img src="{{ awayteam.match.hometeam.image.url }}"> vs <img src="{{ awayteam.hometeam.image.url }}"> {{ awayteam.hometeam.name }}</h4>
+{% for awayteam in awayteams %}
+  <div class="content-section text-center">
+    <!-- bet display data from awayteam (matchs to bet on) -->
+    <p>{{ awayteam.match.match_date|date:"l d F Y" }} - {{ awayteam.match.match_date|date:"H:i" }}</p>
+    <h4>{{ awayteam.match.hometeam.name }} <img src="{{ awayteam.match.hometeam.image.url }}"> vs <img src="{{ awayteam.hometeam.image.url }}"> {{ awayteam.hometeam.name }}</h4>
     
-<!-- Form start -->
-        <form action="{% url 'bet-create' %}" method="POST" name="BetCreateForm" id="BetCreateForm">
-        {% csrf_token %}
-<!-- Form data hidden from awayteam (matchs to bet on - Foreign keys of bet model) -->
-          <div class="form-group d-none">
-            <select  type="datetime" class="form-control" id="user" name="user">
-              <option>{{ user.id }}</option>
-            </select>
-          </div>
-          <div class="form-group d-none">
-            <select  type="datetime" class="form-control" id="match" name="match">
-              <option>{{ awayteam.match.id }}</option>
-            </select>
-          </div>
-          <div class="form-group d-none">
-            <select class="form-control" id="hometeam" name="hometeam">
-              <option>{{ awayteam.match.hometeam.id }}</option>
-            </select>
-          </div>
-          <div class="form-group d-none">
-            <select class="form-control" id="awayteam" name="awayteam">
-              <option>{{ awayteam.id }}</option>
-            </select>
-          </div>
-<!-- Form data request from user to finalize bet creation -->
-          <div class="form-group d-inline-block">
-            <input type="number" class="form-control mt-2" id="prono_hometeam" name="prono_hometeam" required data-validation-required-message="Please enter a goal number."> 
-            <p class="invalid-feedback"></p>
-          </div>
-
-      <div class="form-group form-number-design d-inline-block mx-auto">
-        <input type="number" class="form-control mt-2" id="prono_awayteam" placeholder="{{ awayteam.bet.prono_awayteam }}" name="prono_awayteam" required data-validation-required-message="Please enter a goal number.">
-        <p class="invalid-feedback"></p>
-      </div>
-
-      <div class="form-group mt-2">
-        <label for="tab">Tirs au but ? </label>
-        <input type="checkbox" id="tab"  name="tab">
-        <p class="invalid-feedback"></p>
-      </div>
-      <div class="form-group w-50 mt-2 mx-auto">
-        <label for="winner">Vainqueur (tab) : </label>
-        <select  id="winner"  name="winner" class="form-control">
-          <option> </option>
-          <option>{{ awayteam.hometeam.name }}</option>
-          <option>{{ awayteam.match.hometeam.name }}</option>
+    <!-- Form start -->
+    <form action="{% url 'bet-create' %}" method="POST" name="BetCreateForm" id="BetCreateForm">
+    {% csrf_token %}
+    <!-- Form data hidden from awayteam (matchs to bet on - Foreign keys of bet model) -->
+    <div class="form-group d-none">
+      <select  type="datetime" class="form-control" id="user" name="user">
+        <option>{{ user.id }}</option>
       </select>
+    </div>
+    <div class="form-group d-none">
+      <select  type="datetime" class="form-control" id="match" name="match">
+        <option>{{ awayteam.match.id }}</option>
+      </select>
+    </div>
+    <div class="form-group d-none">
+      <select class="form-control" id="hometeam" name="hometeam">
+        <option>{{ awayteam.match.hometeam.id }}</option>
+      </select>
+    </div>
+    <div class="form-group d-none">
+      <select class="form-control" id="awayteam" name="awayteam">
+        <option>{{ awayteam.id }}</option>
+      </select>
+    </div>
+    <!-- Form data request from user to finalize bet creation -->
+    <div class="form-row">
+      <div class="form-group d-inline-block col-2">
+        <input type="number" class="form-control form-control-sm mt-2" id="prono_hometeam" name="prono_hometeam" required> 
       </div>
-      
-
-      <div class="form-group">
-        <button type="submit" class="btn btn-outline-info mt-3" id="sendMessageButton">Soumettre</button>
+      <div class="form-group d-inline-block col-2">
+        <input type="number" class="form-control form-control-sm mt-2" id="prono_awayteam" name="prono_awayteam" required>
       </div>
-    </form>
-
-<!-- Form errors -->
-  {% if form.errors %}
-    {% for field in form %}
-        {% for error in field.errors %}
-            <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
-            </div>
-        {% endfor %}
-    {% endfor %}
-    {% for error in form.non_field_errors %}
-        <div class="alert alert-danger">
-            <strong>{{ error|escape }}</strong>
-        </div>
-    {% endfor %}
-{% endif %}
-</div>
-
-    {% endfor %}
-  </div> 
+    </div>
+    <div class="form-group mt-2">
+      <label for="tab">Tirs au but ? </label>
+      <input type="checkbox" id="tab"  name="tab">
+    </div>
+    <div class="form-group w-25 mt-2 mx-auto">
+      <label for="winner">Vainqueur(tab):</label>
+      <select  id="winner"  name="winner" class="form-control form-control-sm">
+        <option> </option>
+        <option>{{ awayteam.hometeam.name }}</option>
+        <option>{{ awayteam.match.hometeam.name }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-outline-info btn-sm mt-3" id="sendMessageButton">Soumettre</button>
+    </div>
+  </form>
+  </div>
+{% endfor %}
 {% endblock content %}
