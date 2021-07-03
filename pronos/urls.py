@@ -17,4 +17,5 @@ urlpatterns = [
     path('userteam/join/', views.UserteamJoinView, name='userteam-join'),
     path('match/<int:pk>/', MatchDetailView.as_view(), name='match-detail'),
     path('match/<int:pk>/update/', MatchUpdateView.as_view(), name='match-update'),
+    path('about/', views.about, name='pronos-about'),
 ]

@@ -36,8 +36,10 @@
               <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
               <a class="nav-item nav-link" href="{% url 'bet-index' %}">Mes pronos</a>
               <a class="nav-item nav-link" href="{% url 'bet-create' %}">Faire mes pronos</a>
+              <a class="nav-item nav-link" href="{% url 'pronos-about' %}">Règles du jeu</a>
               <a class="nav-item nav-link" href="{% url 'logout' %}">Se déconnecter</a>
               {% else %}
+              <a class="nav-item nav-link" href="{% url 'about' %}">Règles du jeu</a>
               <a class="nav-item nav-link" href="{% url 'login' %}">Se connecter</a>
               <a class="nav-item nav-link" href="{% url 'register' %}">S'inscrire</a>
             {% endif %}

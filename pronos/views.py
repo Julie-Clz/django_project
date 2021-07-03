@@ -250,3 +250,6 @@ def UserteamJoinView(request):
         form = UserteamJoinform()
 
     return render(request, 'pronos/userteam_join.html', {'form': form})
+
+def about(request):
+    return render(request, 'pronos/about.html', {'title': 'Règles du jeu'})
