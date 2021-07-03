@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-from pronos.models import Userteam, UserteamMember, Bet
+from pronos.models import Match, Userteam, UserteamMember, Bet
 from django.db.models import Sum
 
 
@@ -59,7 +59,7 @@ def statistiques(request):
     userteams =  Userteam.objects.filter(user=request.user).all()
     members =  UserteamMember.objects.filter(user=request.user).all()
     points = Bet.objects.filter(user=request.user).aggregate(sum_point=Sum('point')).get('sum_point')
-    bets = Bet.objects.filter(user=request.user).all()
+    bets = Bet.objects.filter(user=request.user).order_by('match__match_date').all()
     bets_num = Bet.objects.filter(user=request.user).count()
     bets_finish = Bet.objects.filter(user=request.user).filter(match__done=True).count()
     points_max = bets_num * 3
