@@ -109,10 +109,15 @@ def BetCreateView(request):
     # now = datetime.now()
     bets = Bet.objects.all()
     awayteams = Awayteam.objects.all().filter(match__done=False).order_by('match__match_date')
+        
     if request.method == 'POST':
         form = BetCreateForm(request.POST)
         if form.is_valid():
             bet = Bet.objects.all().filter(match=form.instance.match).filter(user=form.instance.user)
+            now = timezone.now()
+            if form.instance.match.match_date <= now:
+                messages.warning(request, f'Trop tard... Le match a déjà commencé ou est terminé!')
+                return redirect('bet-create')
             if bet.exists():
                 messages.warning(request, f'Ton prono existe déjà!')
                 form = BetCreateForm() 
