@@ -112,10 +112,16 @@ a.article-title:hover {
 }
 
 .id-team-list-item a {
-  color: #5f788a;
   margin-left: 10px;
 }
 
 .winner-select {
   width: 50% !important;
+}
+a {
+  color: #01C390;
+  text-decoration: none;
+}
+a:hover {
+  color: #05ac7f;
 }
