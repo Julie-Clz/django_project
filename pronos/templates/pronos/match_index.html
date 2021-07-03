@@ -5,10 +5,7 @@
 {% for awayteam in awayteams %}
   <div class="content-section text-center">
     <p>{{ awayteam.match.match_date|date:"l d F, Y" }} - {{ awayteam.match.match_date|date:"H:i" }}</p>
-    <h4>{{ awayteam.match.hometeam.name }} <img src="{{ awayteam.match.hometeam.image.url }}"> vs <img src="{{ awayteam.hometeam.image.url }}"> {{ awayteam.hometeam.name }}</h4>
-    <!-- {% if awayteam.match.goal_hometeam is not None %}
-      <h4>{{ awayteam.match.goal_hometeam }} - {{ awayteam.match.goal_awayteam }}</h4>
-    {% endif %} -->
+    <h5>{{ awayteam.match.hometeam.name }} <img src="{{ awayteam.match.hometeam.image.url }}"> vs <img src="{{ awayteam.hometeam.image.url }}"> {{ awayteam.hometeam.name }}</h5>
   </div>
 {% endfor %}
 
