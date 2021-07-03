@@ -21,16 +21,15 @@
         </div>
       </div>
       <ul class="id-team mb-3"><strong class="mb-2">Membres:</strong>
+        <li class="id-team-list-item">{{ userteam.user.username.capitalize }}</li>
         {% for member in members %}
           <li class="id-team-list-item">{{ member.user.username.capitalize }}</li>
         {% endfor %}
-        <li class="id-team-list-item">{{ userteam.user.username.capitalize }}</li>
       </ul>
     </div>
   </div>
   <div class="content-section">
     <h4 class="mb-3">Classement</h4>
-
     {% for member in members %}
       {% for user_point in user_points %}
         {% if user_point.user__username == userteam.user.username or user_point.user__username == member.user.username %}
@@ -38,7 +37,5 @@
         {% endif %}
       {% endfor %}
     {% endfor %}
- 
-
   </div>
 {% endblock content %}
