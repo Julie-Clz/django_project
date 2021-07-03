@@ -14,25 +14,5 @@
   {% else %}
     <h4 class="text-center"> Prono : {{ object.prono_hometeam }} - {{ object.prono_awayteam }}</h4>
   {% endif %}
-  
-  <!-- {% if object.match.done == True %}
-    {% if object.match.goal_hometeam == object.prono_hometeam and object.match.goal_awayteam == object.prono_awayteam %}
-      <h4 class="text-center"> Score : {{ object.match.goal_hometeam }} - {{ object.match.goal_awayteam }}</h4>
-      <h4 class="text-center"> Point(s): + 3 </h4>
-    {% elif object.match.goal_hometeam > object.match.goal_awayteam and object.prono_hometeam > object.prono_awayteam %}
-      <h4 class="text-center"> Score : {{ object.match.goal_hometeam }} - {{ object.match.goal_awayteam }}</h4>
-      <h4 class="text-center"> Point(s): + 1 </h4>
-    {% elif object.match.goal_hometeam < object.match.goal_awayteam and object.prono_hometeam < object.prono_awayteam %}
-      <h4 class="text-center"> Score : {{ object.match.goal_hometeam }} - {{ object.match.goal_awayteam }}</h4>
-      <h4 class="text-center"> Point(s): + 1 </h4>  
-    {% elif object.match.goal_hometeam == object.match.goal_awayteam and object.prono_hometeam == object.prono_awayteam %}
-      <h4 class="text-center"> Score : {{ object.match.goal_hometeam }} - {{ object.match.goal_awayteam }}</h4>
-      <h4 class="text-center"> Point(s): + 1 </h4>    
-    {% else %}
-      <h4 class="text-center"> Score : {{ object.match.goal_hometeam }} - {{ object.match.goal_awayteam }}</h4>
-      <h4 class="text-center"> Point(s): 0 </h4>
-    {% endif %}
-  {% endif %} -->
 </div>
-
 {% endblock content %}

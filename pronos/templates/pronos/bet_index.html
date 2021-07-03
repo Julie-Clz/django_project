@@ -1,7 +1,6 @@
 {% extends "blog/base.html" %}
 {% block content %}
 <h1>Mes pronos en cours</h1><br>
-
 <div class="center">
   <a class="btn btn-outline-info btn-sm mt-1 mb-1" href="{% url 'bet-create' %}">Faire un autre prono</a>
 </div>
@@ -11,10 +10,10 @@
   <div class="content-section text-center pronos-card">
     <a class="text-decoration-none text-dark" href="{% url 'bet-detail' bet.id %}">
       <p>{{ bet.match.match_date|date:"l d F, Y" }} - {{ bet.match.match_date|date:"H:i" }}</p>
-      <h4>{{ bet.match.hometeam.name }}<img src="{{ bet.match.hometeam.image.url }}"> vs <img src="{{ bet.awayteam.hometeam.image.url }}">{{ bet.awayteam.hometeam.name }}</h4>
-      <h4>{{ bet.prono_hometeam }} - {{ bet.prono_awayteam }}</h4>
+      <h6>{{ bet.match.hometeam.name }}<img src="{{ bet.match.hometeam.image.url }}"> vs <img src="{{ bet.awayteam.hometeam.image.url }}">{{ bet.awayteam.hometeam.name }}</h6>
+      <h6>{{ bet.prono_hometeam }} - {{ bet.prono_awayteam }}</h6>
       {% if bet.tab == True %}
-        <h4>tab - {{ bet.winner }} (vainqueur)</h4>
+        <h6>tab - {{ bet.winner }} (vainqueur)</h6>
       {% endif %}
     </a>
   </div>
@@ -22,7 +21,7 @@
 <br>
 
 <!-- Bet previous matchs index for current user -->
-<button class="btn btn-outline-info" type="button" data-toggle="collapse" data-target="#collapsePassed" aria-expanded="false" aria-controls="collapsePassed">
+<button class="btn btn-sm btn-outline-info" type="button" data-toggle="collapse" data-target="#collapsePassed" aria-expanded="false" aria-controls="collapsePassed">
   Mes Anciens Pronos
 </button><br>
 
@@ -30,39 +29,19 @@
   {% for donebet in donebets %}
     <div class="content-section text-center pronos-card">
       <p>{{ donebet.match.match_date|date:"l d F, Y" }} - {{ donebet.match.match_date|date:"H:i" }}</p>
-      <h5>{{ donebet.match.hometeam.name }}<img src="{{ donebet.match.hometeam.image.url }}"> vs <img src="{{ donebet.awayteam.hometeam.image.url }}">{{ donebet.awayteam.hometeam.name }}</h5>
+      <h6>{{ donebet.match.hometeam.name }}<img src="{{ donebet.match.hometeam.image.url }}"> vs <img src="{{ donebet.awayteam.hometeam.image.url }}">{{ donebet.awayteam.hometeam.name }}</h6>
       {% if donebet.tab == True %}
-        <h5>Prono : {{ donebet.prono_hometeam }} - {{ donebet.prono_awayteam }} | tab - {{ donebet.winner }} (vainqueur)</h5>
+        <h6>Prono : {{ donebet.prono_hometeam }} - {{ donebet.prono_awayteam }} | tab - {{ donebet.winner }} (vainqueur)</h6>
       {% else %}
-        <h5>Prono : {{ donebet.prono_hometeam }} - {{ donebet.prono_awayteam }}</h5>
+        <h6>Prono : {{ donebet.prono_hometeam }} - {{ donebet.prono_awayteam }}</h6>
       {% endif %}
       {% if donebet.match.winner != "" %}
-        <h5>Score : {{ donebet.match.goal_hometeam }} - {{ donebet.match.goal_awayteam }} | tab - {{ donebet.match.winner}} (vainqueur)</h5>
+        <h6>Score : {{ donebet.match.goal_hometeam }} - {{ donebet.match.goal_awayteam }} | tab - {{ donebet.match.winner}} (vainqueur)</h6>
       {% else %}
-        <h5>Score : {{ donebet.match.goal_hometeam }} - {{ donebet.match.goal_awayteam }}</h5>
+        <h6>Score : {{ donebet.match.goal_hometeam }} - {{ donebet.match.goal_awayteam }}</h6>
       {% endif %}
-      <h5>Points : {{ donebet.point }}</h5>
+      <h6>Points : {{ donebet.point }}</h6>
     </div>
   {% endfor %}
 </div>
-
-
-  <!-- Pagination -->
-    <!-- {% if is_paginated %}
-    {% if page_obj.has_previous %}
-        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-      {% endif %}
-      {% for num in page_obj.paginator.page_range %}
-        {% if page_obj.number == num %}
-          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
-        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
-        {% endif %}
-      {% endfor %}
-      {% if page_obj.has_next %}
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
-        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-      {% endif %}
-    {% endif %} -->
 {% endblock content %}
