@@ -5,7 +5,7 @@
   <div class="content-section text-center">
     <!-- bet display data from awayteam (matchs to bet on) -->
     <p>{{ awayteam.match.match_date|date:"l d F Y" }} - {{ awayteam.match.match_date|date:"H:i" }}</p>
-    <h4>{{ awayteam.match.hometeam.name }} <img src="{{ awayteam.match.hometeam.image.url }}"> vs <img src="{{ awayteam.hometeam.image.url }}"> {{ awayteam.hometeam.name }}</h4>
+    <h6>{{ awayteam.match.hometeam.name }} <img src="{{ awayteam.match.hometeam.image.url }}"> vs <img src="{{ awayteam.hometeam.image.url }}"> {{ awayteam.hometeam.name }}</h6>
     
     <!-- Form start -->
     <form action="{% url 'bet-create' %}" method="POST" name="BetCreateForm" id="BetCreateForm">
