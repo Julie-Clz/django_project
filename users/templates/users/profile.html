@@ -19,9 +19,9 @@
       </div>
     </div> 
     <ul class="id-team mb-3"><strong class="mb-2">Team(s):</strong> 
-      {% for userteam in userteams %}
-        <li class="id-team-list-item"><a href="/userteam/{{ userteam.id }}">{{ userteam.name }} (Admin)</a></li>
-      {% endfor %}
+      <!-- {# for userteam in userteams #} -->
+        <!-- <li class="id-team-list-item"><a href="/userteam/{{ userteam.id }}">{{ userteam.name }} (Admin)</a></li> -->
+      <!-- {# endfor #} -->
       {% for member in members %}
         <li class="id-team-list-item"><a href="/userteam/{{ member.userteam.id }}">{{ member.userteam.name }}</a></li>
       {% endfor %}

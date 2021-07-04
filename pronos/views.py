@@ -183,11 +183,14 @@ class BetDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 @login_required
 def UserteamCreateView(request):
     userteams = Userteam.objects.all()
+    members = UserteamMember.objects.all()
     if request.method == 'POST':
         form = UserteamcreateForm(request.POST)
         form.instance.user = request.user
         if form.is_valid():
             form.save()
+            userteam = form.instance
+            UserteamMember.objects.create(userteam=userteam, user=request.user)
             messages.success(request, f'Ta Team a bien été créée!')
             userteam =  Userteam.objects.last()
             return redirect('userteam-detail', userteam.id)
@@ -203,11 +206,7 @@ class UserteamDetailView(LoginRequiredMixin, DetailView):
         context = super(UserteamDetailView, self).get_context_data(**kwargs)
         context['members'] = UserteamMember.objects.filter(userteam=self.get_object())
         context['current_member'] = UserteamMember.objects.filter(user=self.request.user).first()
-
-        # context['current_member_id'] = context['current_member'].id
-        # cont
-        # context['current_member_id'] = context['current_member'][0].id
-        # points = Bet.objects.values('user__username').annotate(Sum('point'))
+        points = Bet.objects.values('user__username').annotate(Sum('point'))
         context['user_points'] = Bet.objects.values('user__username').annotate(points=Sum('point')).order_by('-points')
         return context
     
