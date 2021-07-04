@@ -67,4 +67,7 @@ class UserteamMember(models.Model):
     userteam = models.ForeignKey(Userteam, on_delete=models.CASCADE, related_name="team")
 
     def __repr__(self):
-        return f"UserteamMember(Team :'{self.userteam}', Member: '{self.user}')"
+        return f"UserteamMember(id: '{self.id}', Team :'{self.userteam}', Member: '{self.user}')"
+
+    def get_absolute_url(self):
+        return reverse('userteam-quit', kwargs={'pk': self.pk})

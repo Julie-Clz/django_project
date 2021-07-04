@@ -106,7 +106,6 @@ class BetListView(LoginRequiredMixin, ListView):
 
 @login_required
 def BetCreateView(request):
-    # now = datetime.now()
     bets = Bet.objects.all()
     awayteams = Awayteam.objects.all().filter(match__done=False).order_by('match__match_date')
         
@@ -203,7 +202,9 @@ class UserteamDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(UserteamDetailView, self).get_context_data(**kwargs)
         context['members'] = UserteamMember.objects.filter(userteam=self.get_object())
-        points = Bet.objects.values('user__username').annotate(Sum('point'))
+        context['current_member'] = UserteamMember.objects.filter(user=self.request.user)
+        context['current_member_id'] = context['current_member'][0].id
+        # points = Bet.objects.values('user__username').annotate(Sum('point'))
         context['user_points'] = Bet.objects.values('user__username').annotate(points=Sum('point')).order_by('-points')
         return context
     
@@ -255,6 +256,19 @@ def UserteamJoinView(request):
         form = UserteamJoinform()
 
     return render(request, 'pronos/userteam_join.html', {'form': form})
+
+
+class UserteamQuitView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = UserteamMember
+    success_url = "/profile/"
+    template_name = 'pronos/userteam_quit.html'
+
+    def test_func(self):
+        userteammember = self.get_object()
+        if self.request.user == userteammember.user:
+            return True
+        return False
+
 
 def about(request):
     return render(request, 'pronos/about.html', {'title': 'Règles du jeu'})

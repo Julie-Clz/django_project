@@ -7,7 +7,7 @@
     <div>
       <h4 class="account-heading">{{ user.username.capitalize }}</h4>
       <p class="text-secondary">{{ user.email }}</p>
-      <h6 class="text-muted">Points : {{ points }}</h6><br>
+      <h6 class="text-success">Points : {{ points }}</h6><br>
       <ul class=""><strong class="">Team(s):</strong> 
         {% for userteam in userteams %}
           <li class="id-team-list-item"><a class="text-decoration-none" href="/userteam/{{ userteam.id }}">{{ userteam.name }} (Admin)</a></li>
@@ -36,13 +36,13 @@
               {% else %}
                 <li class="id-team-list-item">Score : {{ bet.match.goal_hometeam }} - {{ bet.match.goal_awayteam }}</li>
               {% endif %}  
-              <li class="id-team-list-item">➡️ Point(s) : {{ bet.point }}</li>
+              <li class="id-team-list-item"><i class="bi bi-arrow-right-circle-fill text-success"> Point(s) : {{ bet.point }}</i></li>
             </ul><br>
       {% else %}
         <li><strong>{{ bet.match.hometeam.name }} vs {{ bet.awayteam.hometeam.name }}</strong> ({{ bet.match.match_date|date:"d F Y - H:i" }})</li>
           <ul>
             <li class="id-team-list-item">Prono : {{ bet.prono_hometeam }} - {{ bet.prono_awayteam }}</li>
-            <li class="id-team-list-item">➡️ En cours</li>
+            <li class="id-team-list-item"><i class="bi bi-arrow-right-circle-fill text-success"> En cours</i> </li>
         </ul><br>
       {% endif %}
     {% endfor %}
