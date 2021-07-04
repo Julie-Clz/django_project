@@ -28,7 +28,7 @@
         <div class="collapse navbar-collapse" id="navbarToggle">
           <div class="navbar-nav mr-auto">
             <a class="nav-item nav-link" href="{% url 'match-index' %}">Accueil</a>
-            
+            <a class="nav-item nav-link" href="{% url 'pronos-about' %}">Règles du jeu</a>
           </div>
           <!-- Navbar Right Side -->
           <div class="navbar-nav">
@@ -36,10 +36,8 @@
               <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
               <a class="nav-item nav-link" href="{% url 'bet-index' %}">Mes pronos</a>
               <a class="nav-item nav-link" href="{% url 'bet-create' %}">Faire mes pronos</a>
-              <a class="nav-item nav-link" href="{% url 'pronos-about' %}">Règles du jeu</a>
               <a class="nav-item nav-link" href="{% url 'logout' %}">Se déconnecter</a>
-              {% else %}
-              <a class="nav-item nav-link" href="{% url 'pronos-about' %}">Règles du jeu</a>
+            {% else %}
               <a class="nav-item nav-link" href="{% url 'login' %}">Se connecter</a>
               <a class="nav-item nav-link" href="{% url 'register' %}">S'inscrire</a>
             {% endif %}
@@ -51,12 +49,15 @@
   <main role="main" class="container">
     <div class="row justify-content-md-center">
       <div class="col-xs-6 col-lg-12">
+        <div class="back">
+          <a href="{{request.META.HTTP_REFERER}}"><i class="bi bi-arrow-left-square-fill text-success"></i></a>
+        </div><br>
         {% if messages %}
-          {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-              {{ message }}
-            </div>
-          {% endfor %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          {{ message }}
+        </div>
+        {% endfor %}
         {% endif %}
         {% block content %}{% endblock %}
       </div> 
