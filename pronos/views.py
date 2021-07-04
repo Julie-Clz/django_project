@@ -248,10 +248,14 @@ def UserteamJoinView(request):
         form.instance.user = request.user
         # form.instance.userteam = Userteam.name
         if form.is_valid():
-            form.save()
-            messages.success(request, f'Tu es maintenant membre de cette Team!')
-            userteam =  Userteam.objects.last()
-            return redirect('userteam-detail', userteam.id)
+            member = UserteamMember.objects.all().filter(userteam=form.instance.userteam).filter(user=form.instance.user)
+            if member.exists():
+                messages.warning(request, f'Tu es déjà membre de cette Team!')
+                form = UserteamJoinform()
+            else:
+                form.save()
+                messages.success(request, f'Tu es maintenant membre de cette Team!')
+                return redirect('profile')
     else:
         form = UserteamJoinform()
 
