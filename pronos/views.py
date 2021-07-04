@@ -202,7 +202,10 @@ class UserteamDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super(UserteamDetailView, self).get_context_data(**kwargs)
         context['members'] = UserteamMember.objects.filter(userteam=self.get_object())
-        context['current_member'] = UserteamMember.objects.filter(user=self.request.user)
+        context['current_member'] = UserteamMember.objects.filter(user=self.request.user).first()
+
+        # context['current_member_id'] = context['current_member'].id
+        # cont
         # context['current_member_id'] = context['current_member'][0].id
         # points = Bet.objects.values('user__username').annotate(Sum('point'))
         context['user_points'] = Bet.objects.values('user__username').annotate(points=Sum('point')).order_by('-points')
