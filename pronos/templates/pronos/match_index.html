@@ -1,5 +1,14 @@
 {% extends "blog/base.html" %}
+{% block back_content %}
+{% endblock back_content %}
 {% block content %}
+{% if user.is_authenticated %}
+{% else %}
+  <div class="d-flex justify-content-end">
+    <a class="btn btn-success rounded-pill btn-home" role="button" href="{% url 'bet-create' %}">Fais tes pronos</a>
+  </div>
+{% endif %}
+
 <h1>Matchs</h1><br>
 <!-- Next Match index -->
 {% for awayteam in awayteams %}
@@ -10,7 +19,7 @@
 {% endfor %}
 
 <!-- Previous Match index -->
-<button class="btn btn-sm btn-outline-success" type="button" data-toggle="collapse" data-target="#collapsePassed" aria-expanded="false" aria-controls="collapsePassed">
+<button class="btn btn-sm btn-outline-success btn-std" type="button" data-toggle="collapse" data-target="#collapsePassed" aria-expanded="false" aria-controls="collapsePassed">
   Anciens Matchs
 </button><br>
 

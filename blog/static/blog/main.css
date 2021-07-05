@@ -114,6 +114,7 @@ a.article-title:hover {
 .winner-select {
   width: 50% !important;
 }
+
 a {
   color: #01C390;
   text-decoration: none;
@@ -121,9 +122,29 @@ a {
 a:hover {
   color: #05ac7f;
 }
+
 li i {
   color: #01C390;
 }
+
 .dropdown-menu {
   min-width: 19rem !important;
+}
+
+.btn-home {
+  background-color: #01C390 !important;
+  border-color: #01C390 !important;
+}
+.btn-home:hover {
+  color: #01C390 !important;
+  background-color: #ffffff !important;
+}
+
+.btn-std {
+  color: #01C390 !important;
+  border-color: #01C390 !important;
+}
+.btn-std:hover {
+  color: #ffffff !important;
+  background-color: #01C390 !important;
 }

@@ -49,9 +49,11 @@
   <main role="main" class="container">
     <div class="row justify-content-md-center">
       <div class="col-xs-6 col-lg-12">
+        {% block back_content %}
         <div class="back">
-          <a href="{{request.META.HTTP_REFERER}}"><i class="bi bi-arrow-left-square-fill text-success"></i></a>
+          <a href="{{request.META.HTTP_REFERER}}"><i class="bi bi-arrow-left-square-fill" style="color: #01C390;"></i></a>
         </div><br>
+        {% endblock back_content %}
         {% if messages %}
         {% for message in messages %}
         <div class="alert alert-{{ message.tags }}">
