@@ -61,7 +61,7 @@ def statistiques(request):
     points = Bet.objects.filter(user=request.user).aggregate(sum_point=Sum('point')).get('sum_point')
     bets = Bet.objects.filter(user=request.user).order_by('match__match_date').all()
     bets_num = Bet.objects.filter(user=request.user).count()
-    bets_finish = Bet.objects.filter(user=request.user).filter(match__done=True).count()
+    finish_bets = Bet.objects.filter(user=request.user).filter(match__done=True).order_by('-match__match_date').all()
     points_max = bets_num * 3
     
     context = {
@@ -70,7 +70,7 @@ def statistiques(request):
         'points_max': points_max,
         'points': points,
         'bets_num': bets_num,
-        'bets_finish': bets_finish,
+        'finish_bets': finish_bets,
         'bets': bets,
     }
 

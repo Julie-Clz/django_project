@@ -124,3 +124,6 @@ a:hover {
 li i {
   color: #01C390;
 }
+.dropdown-menu {
+  min-width: 19rem !important;
+}

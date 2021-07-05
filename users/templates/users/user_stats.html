@@ -9,9 +9,6 @@
       <p class="text-secondary">{{ user.email }}</p>
       <h6 class="text-success">Points : {{ points }}</h6><br>
       <ul class=""><strong class="">Team(s):</strong> 
-        {% for userteam in userteams %}
-          <li class="id-team-list-item"><a class="text-decoration-none" href="/userteam/{{ userteam.id }}">{{ userteam.name }} (Admin)</a></li>
-        {% endfor %}
         {% for member in members %}
           <li class="id-team-list-item"><a class="text-decoration-none" href="/userteam/{{ member.userteam.id }}">{{ member.userteam.name }}</a></li>
         {% endfor %}
@@ -22,29 +19,21 @@
 <div class="content-section">
   <h4 class="">Mes Statistiques</h4><br>
   <ul>
-    {% for bet in bets %}
-      {% if bet.match.done == True %}
-        <li><strong>{{ bet.match.hometeam.name }} vs {{ bet.awayteam.hometeam.name }}</strong> ({{ bet.match.match_date|date:"d F Y - H:i" }})</li>
-            <ul>
-              {% if bet.tab == True %}
-                <li class="id-team-list-item">Prono : {{ bet.prono_hometeam }} - {{ bet.prono_awayteam }} | tab: {{ bet.winner }}</li>
-              {% else %}
-                <li class="id-team-list-item">Prono : {{ bet.prono_hometeam }} - {{ bet.prono_awayteam }}</li>
-              {% endif %}
-              {% if bet.match.winner != none %}
-                <li class="id-team-list-item">Score : {{ bet.match.goal_hometeam }} - {{ bet.match.goal_awayteam }} | tab: {{ bet.match.winner }}</li>
-              {% else %}
-                <li class="id-team-list-item">Score : {{ bet.match.goal_hometeam }} - {{ bet.match.goal_awayteam }}</li>
-              {% endif %}  
-              <li class="id-team-list-item"><i class="bi bi-arrow-right-circle-fill text-success"> Point(s) : {{ bet.point }}</i></li>
-            </ul><br>
-      {% else %}
-        <li><strong>{{ bet.match.hometeam.name }} vs {{ bet.awayteam.hometeam.name }}</strong> ({{ bet.match.match_date|date:"d F Y - H:i" }})</li>
-          <ul>
-            <li class="id-team-list-item">Prono : {{ bet.prono_hometeam }} - {{ bet.prono_awayteam }}</li>
-            <li class="id-team-list-item"><i class="bi bi-arrow-right-circle-fill text-success"> En cours</i> </li>
-        </ul><br>
-      {% endif %}
+    {% for finish_bet in finish_bets %}
+        <li class="dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false"><strong>{{ finish_bet.match.hometeam.name }} vs {{ finish_bet.awayteam.hometeam.name }}</strong> ({{ finish_bet.match.match_date|date:"d F Y - H:i" }})</li>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+            {% if finish_bet.tab == True %}
+              <li class="id-team-list-item text-center">Prono : {{ finish_bet.prono_hometeam }} - {{ finish_bet.prono_awayteam }} | tab: {{ finish_bet.winner }}</li>
+            {% else %}
+              <li class="id-team-list-item text-center">Prono : {{ finish_bet.prono_hometeam }} - {{ finish_bet.prono_awayteam }}</li>
+            {% endif %}
+            {% if finish_bet.match.winner != none %}
+              <li class="id-team-list-item text-center">Score : {{ finish_bet.match.goal_hometeam }} - {{ finish_bet.match.goal_awayteam }} | tab: {{ finish_bet.match.winner }}</li>
+            {% else %}
+              <li class="id-team-list-item text-center">Score : {{ finish_bet.match.goal_hometeam }} - {{ finish_bet.match.goal_awayteam }}</li>
+            {% endif %}  
+            <li class="id-team-list-item text-center"><i class="bi bi-arrow-right-circle-fill text-success"> Point(s) : {{ finish_bet.point }}</i></li>
+          </ul><br>
     {% endfor %}
   </ul>
 </div>
