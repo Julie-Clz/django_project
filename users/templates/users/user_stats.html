@@ -18,9 +18,9 @@
 </div>
 <div class="content-section">
   <h4 class="">Mes Statistiques</h4><br>
-  <ul>
+  <ul class="list-unstyled">
     {% for finish_bet in finish_bets %}
-        <li class="dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false"><strong>{{ finish_bet.match.hometeam.name }} vs {{ finish_bet.awayteam.hometeam.name }}</strong> ({{ finish_bet.match.match_date|date:"d F Y - H:i" }})</li>
+        <li class="dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false"><strong>{{ finish_bet.match.hometeam.name }} vs {{ finish_bet.awayteam.hometeam.name }}</strong> <small class="fw-light">({{ finish_bet.match.match_date|date:"d F Y - H:i" }})</small></li>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
             {% if finish_bet.tab == True %}
               <li class="id-team-list-item text-center">Prono : {{ finish_bet.prono_hometeam }} - {{ finish_bet.prono_awayteam }} | tab: {{ finish_bet.winner }}</li>
