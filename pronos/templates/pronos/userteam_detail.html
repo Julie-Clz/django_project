@@ -29,12 +29,14 @@
   </div>
   <div class="content-section">
     <h4 class="mb-3">Classement</h4>
+    <ol>
     {% for user_point in user_points %}
     {% for member in members %}
         {% if user_point.user__username == member.user.username %}
-          <li class="id-team-list-item">{{ user_point.user__username.capitalize }} : {{ user_point.points }} Point(s)</li>
+          <li class="">{{ user_point.user__username.capitalize }} : {{ user_point.points }} Point(s)</li>
         {% endif %}
       {% endfor %}
     {% endfor %}
+  </ol>
   </div>
 {% endblock content %}
