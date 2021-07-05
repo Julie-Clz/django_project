@@ -276,5 +276,12 @@ class UserteamQuitView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return False
 
 
+class UserteammemberDeleteView(LoginRequiredMixin, DeleteView):
+    model = UserteamMember
+    success_url = "/profile/"
+    template_name = 'pronos/userteammember_delete.html'
+
+
+# Règles du jeu
 def about(request):
     return render(request, 'pronos/about.html', {'title': 'Règles du jeu'})

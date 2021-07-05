@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="content-section" >
+  <form action="" method="POST">
+    {% csrf_token %}
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-4">Supprime un membre</legend>
+      <h5 class="mb-3">Es-tu sûr de vouloir supprimer ce membre de la Team {{ object.userteam.name }} ?</h5>
+      <h3 class="text-center">{{ object.user.username.capitalize }}</h3>
+    </fieldset>
+    <div class="form-group">
+      <button class="btn btn-outline-danger" type="submit">Oui, Supprimer</button>
+      <a class="btn btn-outline-secondary" href="{% url 'userteam-detail' object.userteam.id %}">Annuler</a>
+    </div>
+    </div>
+  </form>
+</div>
+{% endblock content %}

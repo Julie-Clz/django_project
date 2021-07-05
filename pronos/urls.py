@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (MatchListView, BetListView, BetCreateView, BetDetailView, BetUpdateView, BetDeleteView, 
-UserteamCreateView, UserteamDetailView, UserteamUpdateView, UserteamDeleteView, UserteamJoinView, UserteamQuitView, MatchDetailView, MatchUpdateView)
+UserteamCreateView, UserteamDetailView, UserteamUpdateView, UserteamDeleteView, UserteamJoinView, UserteamQuitView, UserteammemberDeleteView, MatchDetailView, MatchUpdateView)
 from . import views
 
 urlpatterns = [
@@ -16,6 +16,7 @@ urlpatterns = [
     path('userteam/<int:pk>/delete/', UserteamDeleteView.as_view(), name='userteam-delete'),
     path('userteam/join/', views.UserteamJoinView, name='userteam-join'),
     path('userteam/<int:pk>/quit/', UserteamQuitView.as_view(), name='userteam-quit'),
+    path('userteammember/<int:pk>/delete/', UserteammemberDeleteView.as_view(), name='userteammember-delete'),
     path('match/<int:pk>/', MatchDetailView.as_view(), name='match-detail'),
     path('match/<int:pk>/update/', MatchUpdateView.as_view(), name='match-update'),
     path('about/', views.about, name='pronos-about'),

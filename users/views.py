@@ -24,9 +24,7 @@ def profile(request):
     userteams =  Userteam.objects.filter(user=request.user).all()
     members =  UserteamMember.objects.filter(user=request.user).all()
     points = Bet.objects.filter(user=request.user).aggregate(sum_point=Sum('point')).get('sum_point')
-    bets_num = Bet.objects.filter(user=request.user).count()
     bets_finish = Bet.objects.filter(user=request.user).filter(match__done=True).count()
-    points_max = bets_num * 3
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
@@ -45,9 +43,7 @@ def profile(request):
         'p_form': p_form,
         'userteams': userteams,
         'members': members,
-        'points_max': points_max,
         'points': points,
-        'bets_num': bets_num,
         'bets_finish': bets_finish,
     }
 
