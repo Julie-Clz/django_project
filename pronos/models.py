@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from easy_thumbnails.fields import ThumbnailerImageField
 
 
 class Hometeam(models.Model):
@@ -50,9 +51,11 @@ class Bet(models.Model):
         return reverse('bet-detail', kwargs={'pk': self.pk})
 
 
+CROP_SETTINGS = {'size': (300, 300), 'crop': 'smart'}
+
 class Userteam(models.Model):
     name = models.CharField(max_length=20, unique=True)
-    image = models.ImageField(default='profile_pics/default.jpg', upload_to='team_pics')
+    image = ThumbnailerImageField(default='profile_pics/default.jpg', upload_to='userteam_pics', resize_source=CROP_SETTINGS)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="owner")
 
     def __str__(self):

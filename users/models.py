@@ -1,23 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
-from PIL import Image
+from easy_thumbnails.fields import ThumbnailerImageField
 
+
+CROP_SETTINGS = {'size': (300, 300), 'crop': 'smart'}
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=CASCADE)
-    image = models.ImageField(default='profile_pics/default.jpg', upload_to='profile_pics')
-
+    image = ThumbnailerImageField(default='profile_pics/default.jpg', upload_to='profile_pics', resize_source=CROP_SETTINGS)
+    
     def __str__(self):
         return f'{self.user.username} Profile'
-
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-
-    #     img = Image.open(self.image.path)
-
-    #     if img.height > 300 or img.width > 300:
-    #         output_size = (300, 300)
-    #         img.thumbnail(output_size)
-    #         img.save(self.image.path)
-    # 
+    
