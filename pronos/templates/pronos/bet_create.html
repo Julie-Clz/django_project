@@ -1,6 +1,23 @@
 {% extends "blog/base.html" %}
 {% block content %}
+<div class="d-flex justify-content-end">
+  <!-- <div class="d-flex flex-column">
+    <p class="text-center">Prochain match</p>
+    <div class="d-flex justify-content-center">
+      <p class="text-center counter">{{ chrono }}</p>
+    </div>
+  </div> -->
+  <div class="d-flex flex-column">
+    <p class="text-center">Pronos restants</p>
+    <div class="d-flex justify-content-center">
+      <p class="text-center counter">{{ matchs_to_bet }}</p>
+    </div>
+  </div>
+</div>
+
+
 <h1>Fais tes Pronos</h1><br>
+
 {% for awayteam in awayteams %}
   <div class="content-section text-center">
     <!-- bet display data from awayteam (matchs to bet on) -->

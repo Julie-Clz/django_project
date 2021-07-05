@@ -106,7 +106,13 @@ class BetListView(LoginRequiredMixin, ListView):
 
 @login_required
 def BetCreateView(request):
-    bets = Bet.objects.all()
+    bets = Bet.objects.filter(match__done=False).filter(user=request.user).count()
+    matchs = Match.objects.filter(done=False).count()
+    matchs_to_bet = matchs - bets
+    now = timezone.now()
+    next_match = Match.objects.filter(done=False).order_by('match_date').first()
+    # chrono_delta =  str(next_match.match_date - now).split(".")[0]
+    chrono = str(next_match.match_date - now).split(".")[0]
     awayteams = Awayteam.objects.all().filter(match__done=False).order_by('match__match_date')
         
     if request.method == 'POST':
@@ -127,7 +133,7 @@ def BetCreateView(request):
     else:
         form = BetCreateForm()
 
-    return render(request, 'pronos/bet_create.html', {'form': form, 'awayteams': awayteams, 'bets': bets })
+    return render(request, 'pronos/bet_create.html', {'form': form, 'awayteams': awayteams, 'matchs_to_bet': matchs_to_bet, 'chrono': chrono })
         
 
 class BetDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
