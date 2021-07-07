@@ -78,6 +78,12 @@ class MatchUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
                 elif home_score == away_score and bet.prono_hometeam == bet.prono_awayteam and winner == bet.winner:
                     bet.point = 1
                     bet.save()
+                elif home_score == away_score and bet.prono_hometeam < bet.prono_awayteam and winner == bet.awayteam.hometeam.name:
+                    bet.point = 1
+                    bet.save()
+                elif home_score == away_score and bet.prono_hometeam > bet.prono_awayteam and winner == bet.hometeam.name:
+                    bet.point = 1
+                    bet.save()
                 else:
                     bet.point = 0
                     bet.save()
