@@ -139,7 +139,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-LOGIN_REDIRECT_URL = 'match-index'
+LOGIN_REDIRECT_URL = 'bet-index'
 
 LOGIN_URL = 'login'
 
