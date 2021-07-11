@@ -8,6 +8,20 @@ h1, h2, h3, h4, h5, h6 {
   color: #444444;
 }
 
+.logo-title {
+  font-family: lobster, sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem !important;
+}
+
+.nav-item {
+  color: #ffffff  !important;
+}
+
+.nav-item:hover {
+  color: #cbd5db !important;
+}
+
 ul {
   margin: 0;
 }
