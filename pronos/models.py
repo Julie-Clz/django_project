@@ -47,8 +47,11 @@ class Bet(models.Model):
     def __str__(self):
         return "{}, {} : {} - {}".format(str(self.id), self.user.username, self.hometeam.name, self.awayteam.hometeam.name)
 
+    # def get_absolute_url(self):
+    #     return reverse('bet-detail', kwargs={'pk': self.pk})
+
     def get_absolute_url(self):
-        return reverse('bet-detail', kwargs={'pk': self.pk})
+        return reverse('bet-update', kwargs={'pk': self.pk})
 
 
 CROP_SETTINGS = {'size': (300, 300), 'crop': 'smart'}

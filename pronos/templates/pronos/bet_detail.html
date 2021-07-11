@@ -8,7 +8,7 @@
     {% endif %}
   </div>
   <p class="text-center">{{ object.match.match_date|date:"l d F Y" }} - {{ object.match.match_date|date:"H:i" }}</p>
-  <h4 class="text-center">{{ object.hometeam }} <small>vs</small> {{ object.awayteam }}</h4>
+  <h4 class="text-center">{{ object.hometeam.name }} <small>vs</small> {{ object.awayteam.hometeam.name }}</h4>
   {% if object.tab == True %}
     <h6 class="text-center"> Prono : {{ object.prono_hometeam }} - {{ object.prono_awayteam }} | tab - {{ object.winner }} <small>(vainqueur)</small></h6>
   {% else %}

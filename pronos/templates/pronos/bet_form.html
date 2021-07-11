@@ -4,7 +4,7 @@
 <h1>Modifie ton Prono</h1>
   <div class="content-section mt-4" >
     <p class="text-center">{{ object.match.match_date|date:"l d F Y" }} - {{ object.match.match_date|date:"H:i" }}</p>
-    <h2 class="text-center">{{ object.hometeam }} <small>vs</small> {{ object.awayteam }}</h2>
+    <h2 class="text-center">{{ object.hometeam.name }} <small>vs</small> {{ object.awayteam.hometeam.name }}</h2>
 
     <form class="mt-3" action="" method="POST">
       {% csrf_token %}
