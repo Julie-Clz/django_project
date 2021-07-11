@@ -20,18 +20,18 @@ class Match(models.Model):
     hometeam = models.ForeignKey(Hometeam, on_delete=models.CASCADE, related_name='hometeam')
 
     def __str__(self):
-        return str(self.match_date.strftime('%d/%m/%Y %H:%M'))
+        return  "{}: {}, done: {}".format(str(self.id), str(self.match_date.strftime('%d/%m/%Y %H:%M')), self.done)
    
     def get_absolute_url(self):
         return reverse('match-detail', kwargs={'pk': self.pk})
 
 
 class Awayteam(models.Model):
-    hometeam = models.ForeignKey(Hometeam, on_delete=models.CASCADE, related_name='team')
+    hometeam = models.ForeignKey(Hometeam, on_delete=models.CASCADE, related_name='awayteam')
     match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name='match')
 
     def __str__(self):
-        return self.hometeam.name
+        return "{} : {} - {}".format(str(self.match.match_date.strftime('%d/%m/%Y %H:%M')), self.match.hometeam.name, self.hometeam.name)
 
 class Bet(models.Model):
     prono_hometeam = models.PositiveIntegerField(blank=True, null=True)
@@ -45,7 +45,7 @@ class Bet(models.Model):
     tab = models.BooleanField(default=False)
     
     def __str__(self):
-        return str(self.id)
+        return "{}, {} : {} - {}".format(str(self.id), self.user.username, self.hometeam.name, self.awayteam.hometeam.name)
 
     def get_absolute_url(self):
         return reverse('bet-detail', kwargs={'pk': self.pk})
@@ -69,8 +69,8 @@ class UserteamMember(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="member")
     userteam = models.ForeignKey(Userteam, on_delete=models.CASCADE, related_name="team")
 
-    def __repr__(self):
-        return f"UserteamMember(id: '{self.id}', Team :'{self.userteam}', Member: '{self.user}')"
+    def __str__(self):
+        return "{} : {}".format(self.user.username,self.userteam.name)
 
     def get_absolute_url(self):
         return reverse('userteam-quit', kwargs={'pk': self.pk})

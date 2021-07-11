@@ -18,6 +18,12 @@
 
 <h1>Fais tes Pronos</h1><br>
 
+{% if matchs_to_bet == 0 %}
+  <h6>Tu as déjà fait tout tes pronos, mais tu peux les modifier <a href="{% url 'bet-index' %}">ici</a> !</h6>
+  <h6></h6>
+{% else %}
+
+
 {% for awayteam in awayteams %}
   <div class="content-section text-center">
     <!-- bet display data from awayteam (matchs to bet on) -->
@@ -75,4 +81,5 @@
   </form>
   </div>
 {% endfor %}
+{% endif %}
 {% endblock content %}
