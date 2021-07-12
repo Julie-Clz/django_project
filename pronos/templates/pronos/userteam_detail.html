@@ -37,14 +37,46 @@
   </div>
   <div class="content-section">
     <h4 class="mb-3">Classement</h4>
-    <ol>
-    {% for user_point in user_points %}
-    {% for member in members %}
-        {% if user_point.user__username == member.user.username %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">#</th>
+          <th scope="col" class="text-center">Joueurs</th>
+          <th scope="col" class="text-center">Pronos</th>
+          <th scope="col" class="text-center">Bons</th>
+          <th scope="col" class="text-center">Exacts</th>
+          <th scope="col" class="text-center">Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user_point in user_points %}
+          {% for member in members %}
+            {% if user_point.user__username == member.user.username %}
+              <tr>
+                {% if members.count > 1 %}
+                  <th scope="row" class="text-center">{{ forloop.parentloop.counter }}</th>
+                {% else %}
+                  <th scope="row" class="text-center">1</th>
+                {% endif %}
+                    <td class="text-center">{{ user_point.user__username.capitalize }}</td>
+                    <td class="text-center">{{ user_point.pronos }}</td>
+                    <td class="text-center">{{ user_point.bons }}</td>
+                    <td class="text-center">{{ user_point.exacts }}</td>
+                    <td class="text-center">{{ user_point.points }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </tbody>
+    </table>
+    <!-- <ol>
+    {# for user_point in user_points #}
+      {# for member in members #}
+        {# if user_point.user__username == member.user.username #}
           <li class="">{{ user_point.user__username.capitalize }} : {{ user_point.points }} Point(s)</li>
-        {% endif %}
-      {% endfor %}
-    {% endfor %}
-  </ol>
+        {# endif #}
+      {# endfor #}
+    {# endfor #}
+  </ol> -->
   </div>
 {% endblock content %}

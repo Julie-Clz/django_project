@@ -1,4 +1,5 @@
 from django.contrib.auth import models
+from django.db.models.aggregates import Count
 from django.forms.widgets import ChoiceWidget
 from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -9,7 +10,7 @@ from django.views.generic import ListView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import BetCreateForm, UserteamcreateForm, UserteamJoinform
 from datetime import datetime
-from django.db.models import Sum
+from django.db.models import Sum, Count, Q
 from django.utils.functional import cached_property
 import pytz
 from django.utils import timezone
@@ -218,8 +219,7 @@ class UserteamDetailView(LoginRequiredMixin, DetailView):
         context = super(UserteamDetailView, self).get_context_data(**kwargs)
         context['members'] = UserteamMember.objects.filter(userteam=self.get_object())
         context['current_member'] = UserteamMember.objects.filter(user=self.request.user).first()
-        points = Bet.objects.values('user__username').annotate(Sum('point'))
-        context['user_points'] = Bet.objects.values('user__username').annotate(points=Sum('point')).order_by('-points')
+        context['user_points'] = Bet.objects.values('user__username').annotate(points=Sum('point')).annotate(pronos=Count('match')).annotate(bons=Count('point', filter=Q(point=1))).annotate(exacts=Count('point', filter=Q(point=3))).order_by('-points')
         return context
     
     def test_func(self):
