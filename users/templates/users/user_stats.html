@@ -18,7 +18,51 @@
 </div>
 <div class="content-section">
   <h4 class="">Mes Statistiques</h4><br>
-  <ul class="list-unstyled">
+  <table class="table">
+    <thead>
+      <tr>
+        <!-- <th scope="col" class="text-center">#</th> -->
+        <th scope="col" class="text-center">Matchs</th>
+        <th scope="col" class="text-center">Pronos</th>
+        <th scope="col" class="text-center">Bons</th>
+        <th scope="col" class="text-center">Exacts</th>
+        <th scope="col" class="text-center">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user_point in user_points %}
+        <tr class="table-success">
+          <!-- <th scope="row" class="text-center">{{ forloop.counter }}</th> -->
+            <td class="text-center fw-bold">{{ matchs }}</td>
+            <td class="text-center fw-bold">{{ user_point.pronos }}</td>
+            <td class="text-center fw-bold">{{ user_point.bons }}</td>
+            <td class="text-center fw-bold">{{ user_point.exacts }}</td>
+            <td class="text-center fw-bold">{{ user_point.points }}</td>
+        </tr>
+        <tr>
+          <!-- <th scope="row" class="text-center">{{ forloop.counter }}</th> -->
+            <td class="text-center"><small>%</small> Matchs</td>
+            <td class="text-center">{{ pronostat }}<small>%</small></td>
+            <td class="text-center"></td>
+            <td class="text-center"></td>
+            <td class="text-center">{{ pointstats }}<small>%</small></td>
+        </tr>
+        <tr>
+          <!-- <th scope="row" class="text-center">{{ forloop.counter }}</th> -->
+            <td class="text-center"></td>
+            <td class="text-center"><small>%</small> Pronos</td>
+            <td class="text-center">{{ bonstat }}<small>%</small></td>
+            <td class="text-center">{{ exactstat }}<small>%</small></td>
+            <td class="text-center">{{ pointstat }}<small>%</small></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+
+
+  <!-- <ul class="list-unstyled">
     {% for finish_bet in finish_bets %}
         <li class="dropdown-toggle" id="dropdownMenu" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false"><strong>{{ finish_bet.match.hometeam.name }} vs {{ finish_bet.awayteam.hometeam.name }}</strong> <small class="fw-light">({{ finish_bet.match.match_date|date:"d F Y - H:i" }})</small></li>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
@@ -35,6 +79,6 @@
             <li class="id-team-list-item text-center"><i class="bi bi-arrow-right-circle-fill text-success"> Point(s) : {{ finish_bet.point }}</i></li>
           </ul><br>
     {% endfor %}
-  </ul>
+  </ul> -->
 </div>
 {% endblock content %}

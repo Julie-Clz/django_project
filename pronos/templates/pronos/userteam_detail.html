@@ -36,7 +36,7 @@
     </div>
   </div>
   <div class="content-section">
-    <h4 class="mb-3">Classement</h4>
+    <h4 class="mb-4">Classement</h4>
     <table class="table">
       <thead>
         <tr>
@@ -50,25 +50,27 @@
       </thead>
       <tbody>
         {% for user_point in user_points %}
-          <tr>
-            <th scope="row" class="text-center">{{ forloop.counter }}</th>
-              <td class="text-center">{{ user_point.user__username.capitalize }}</td>
-              <!-- <td class="text-center">{{ user_point.pronos }}</td> -->
-              <td class="text-center">{{ user_point.bons }}</td>
-              <td class="text-center">{{ user_point.exacts }}</td>
-              <td class="text-center">{{ user_point.points }}</td>
-          </tr>
+          {% if user_point.user__username == user.username %}
+            <tr class="table-success">
+              <th scope="row" class="text-center">{{ forloop.counter }}</th>
+                <td class="text-center">{{ user_point.user__username.capitalize }}</td>
+                <!-- <td class="text-center">{{ user_point.pronos }}</td> -->
+                <td class="text-center">{{ user_point.bons }}</td>
+                <td class="text-center">{{ user_point.exacts }}</td>
+                <td class="text-center">{{ user_point.points }}</td>
+            </tr>
+          {% else %}
+            <tr>
+              <th scope="row" class="text-center">{{ forloop.counter }}</th>
+                <td class="text-center">{{ user_point.user__username.capitalize }}</td>
+                <!-- <td class="text-center">{{ user_point.pronos }}</td> -->
+                <td class="text-center">{{ user_point.bons }}</td>
+                <td class="text-center">{{ user_point.exacts }}</td>
+                <td class="text-center">{{ user_point.points }}</td>
+            </tr>
+          {% endif %}
         {% endfor %}
       </tbody>
     </table>
-    <!-- <ol>
-    {# for user_point in user_points #}
-      {# for member in members #}
-        {# if user_point.user__username == member.user.username #}
-          <li class="">{{ user_point.user__username.capitalize }} : {{ user_point.points }} Point(s)</li>
-        {# endif #}
-      {# endfor #}
-    {# endfor #}
-  </ol> -->
   </div>
 {% endblock content %}
