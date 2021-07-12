@@ -50,18 +50,14 @@
       </thead>
       <tbody>
         {% for user_point in user_points %}
-          {% for member in members %}
-            {% if user_point.user__username == member.user.username %}
-              <tr>
-                <th scope="row" class="text-center">{{ forloop.counter }}</th>
-                  <td class="text-center">{{ user_point.user__username.capitalize }}</td>
-                  <!-- <td class="text-center">{{ user_point.pronos }}</td> -->
-                  <td class="text-center">{{ user_point.bons }}</td>
-                  <td class="text-center">{{ user_point.exacts }}</td>
-                  <td class="text-center">{{ user_point.points }}</td>
-              </tr>
-            {% endif %}
-          {% endfor %}
+          <tr>
+            <th scope="row" class="text-center">{{ forloop.counter }}</th>
+              <td class="text-center">{{ user_point.user__username.capitalize }}</td>
+              <!-- <td class="text-center">{{ user_point.pronos }}</td> -->
+              <td class="text-center">{{ user_point.bons }}</td>
+              <td class="text-center">{{ user_point.exacts }}</td>
+              <td class="text-center">{{ user_point.points }}</td>
+          </tr>
         {% endfor %}
       </tbody>
     </table>

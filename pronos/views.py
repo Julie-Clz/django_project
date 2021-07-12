@@ -219,7 +219,8 @@ class UserteamDetailView(LoginRequiredMixin, DetailView):
         context = super(UserteamDetailView, self).get_context_data(**kwargs)
         context['members'] = UserteamMember.objects.filter(userteam=self.get_object())
         context['current_member'] = UserteamMember.objects.filter(user=self.request.user).first()
-        context['user_points'] = Bet.objects.values('user__username').annotate(points=Sum('point')).annotate(pronos=Count('match')).annotate(bons=Count('point', filter=Q(point=1))).annotate(exacts=Count('point', filter=Q(point=3))).order_by('-points')
+        team_members = UserteamMember.objects.filter(userteam=self.get_object()).values_list('user', flat=True)
+        context['user_points'] = Bet.objects.filter(user__in=team_members).values('user__username').annotate(points=Sum('point')).annotate(pronos=Count('match')).annotate(bons=Count('point', filter=Q(point=1))).annotate(exacts=Count('point', filter=Q(point=3))).order_by('-points')
         return context
     
     def test_func(self):

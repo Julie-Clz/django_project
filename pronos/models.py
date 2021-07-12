@@ -77,3 +77,4 @@ class UserteamMember(models.Model):
 
     def get_absolute_url(self):
         return reverse('userteam-quit', kwargs={'pk': self.pk})
+        
