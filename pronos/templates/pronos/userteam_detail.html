@@ -53,7 +53,7 @@
           {% for member in members %}
             {% if user_point.user__username == member.user.username %}
               <tr>
-                <th scope="row" class="text-center">{{ forloop.revcounter }}</th>
+                <th scope="row" class="text-center">{{ forloop.counter }}</th>
                   <td class="text-center">{{ user_point.user__username.capitalize }}</td>
                   <!-- <td class="text-center">{{ user_point.pronos }}</td> -->
                   <td class="text-center">{{ user_point.bons }}</td>
