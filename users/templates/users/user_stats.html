@@ -31,6 +31,21 @@
     </thead>
     <tbody>
       {% for user_point in user_points %}
+      <div class="stats d-flex justify-content-around">
+        <div>
+          <p class="text-muted text-center">Participation</p>
+          <div class="circle-stat">{{ pronostat }}<small>%</small></div>
+        </div>
+        <div>
+          <p class="text-muted text-center">Performance</p>
+          <div class="circle-stat">{{ pointstat }}<small>%</small></div>
+        </div>
+        <div>
+          <p class="text-muted text-center">Précision</p>
+          <div class="circle-stat">{{ exactstat }}<small>%</small></div>
+        </div>
+      </div>
+      <br>
         <tr class="table-success">
           <!-- <th scope="row" class="text-center">{{ forloop.counter }}</th> -->
             <td class="text-center fw-bold">{{ matchs }}</td>
@@ -39,22 +54,22 @@
             <td class="text-center fw-bold">{{ user_point.exacts }}</td>
             <td class="text-center fw-bold">{{ user_point.points }}</td>
         </tr>
-        <tr>
-          <!-- <th scope="row" class="text-center">{{ forloop.counter }}</th> -->
+        <!-- <tr>
+          <th scope="row" class="text-center">{{ forloop.counter }}</th>
             <td class="text-center"><small>%</small> Matchs</td>
             <td class="text-center">{{ pronostat }}<small>%</small></td>
             <td class="text-center"></td>
             <td class="text-center"></td>
             <td class="text-center">{{ pointstats }}<small>%</small></td>
         </tr>
-        <tr>
+        <tr> -->
           <!-- <th scope="row" class="text-center">{{ forloop.counter }}</th> -->
-            <td class="text-center"></td>
+            <!-- <td class="text-center"></td>
             <td class="text-center"><small>%</small> Pronos</td>
             <td class="text-center">{{ bonstat }}<small>%</small></td>
             <td class="text-center">{{ exactstat }}<small>%</small></td>
             <td class="text-center">{{ pointstat }}<small>%</small></td>
-        </tr>
+        </tr> -->
       {% endfor %}
     </tbody>
   </table>
