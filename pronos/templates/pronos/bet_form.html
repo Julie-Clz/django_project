@@ -17,7 +17,10 @@
             {{ form.prono_awayteam|as_crispy_field }}
           </div>
         </div>
-        <div class="form-group mt-2 d-flex justify-content-center">
+
+        <!-- Section Tirs au but: Décommenter pour les phases finales -->
+
+        <!-- <div class="form-group mt-2 d-flex justify-content-center">
           <label style="margin-inline: 5px;" for="tab">Tirs au but ? </label>
           {{ form.tab|as_crispy_field }}
         </div>
@@ -36,7 +39,7 @@
               <option>{{ object.awayteam }}</option>
             {% endif %}
           </select>
-        </div>
+        </div> -->
     
       </fieldset>
       <div class="form-group d-flex justify-content-center">
