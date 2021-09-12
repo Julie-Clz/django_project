@@ -7,7 +7,11 @@
     <div>
       <h2 class="account-heading">{{ user.username.capitalize }}</h2>
       <p class="text-secondary">{{ user.email }}</p>
-      <p class="text-secondary">Points : {{ points }}</p>
+      {% if points != none %}
+        <p class="text-secondary">Points : {{ points }}</p>
+      {% else %}
+        <p class="text-secondary">Points : 0</p>
+      {% endif %}
       <p><a href="{% url 'user-stats' %}">Mes Statistiques</a>
     </div>
   </div>
